@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiProvider } from '../providers/api.provider';
 import { ResApiInterface } from '../interfaces/res-api.interface';
-import { UserInterface } from '../interfaces/user.interface';
+import { CredencialInterface } from '../interfaces/credencial.interface';
 
 @Injectable()
 export class LoginService{
@@ -16,7 +16,7 @@ export class LoginService{
 
 
     //funcion que va a realizar consumo privado
-    private _postLogin(user: UserInterface) {
+    private _postLogin(user: CredencialInterface) {
         //configurar headers
         let paramsStr = JSON.stringify(user); //JSON to String
         let headers = new HttpHeaders({ "Content-Type": "application/json" });
@@ -26,14 +26,14 @@ export class LoginService{
 
     //funcion asyncrona con promise
 
-    postLogin(user: UserInterface): Promise<ResApiInterface> {
+    postLogin(user: CredencialInterface): Promise<ResApiInterface> {
         //consumo primer servicio
         return new Promise((resolve, reject) => {
             this._postLogin(user).subscribe(
                 res => {
                     let resApi: ResApiInterface = {
                         success: true,
-                        message: res
+                        data: res
                     }
                     resolve(resApi)
                 },
@@ -41,7 +41,7 @@ export class LoginService{
                 err => {
                     let resApi: ResApiInterface = {
                         success: false,
-                        message: err
+                        data: err
                     }
                     resolve(resApi);
 

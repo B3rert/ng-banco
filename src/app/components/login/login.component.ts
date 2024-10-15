@@ -1,20 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
-import { UserInterface } from 'src/app/interfaces/user.interface';
+import { CredencialInterface } from 'src/app/interfaces/credencial.interface';
 import { LoginService } from 'src/app/services/login.service';
 import { WidgetService } from 'src/app/services/widget.service';
+import { UserInterface } from 'src/app/interfaces/user.interface';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  providers:[
+  providers: [
     LoginService,
     WidgetService,
   ]
 })
-export class LoginComponent  implements OnInit{
+export class LoginComponent implements OnInit {
   //Declaracion de variables a utilizar
   nombreInput: string = "";
   claveInput: string = "";
@@ -22,23 +23,21 @@ export class LoginComponent  implements OnInit{
   mostrarTexto: boolean = false;
   isLoading: boolean = false;
 
-   //Intancia de servicios
-   constructor(
+  //Intancia de servicios
+  constructor(
     private _loginService: LoginService,
     private _widgetService: WidgetService,
     private _router: Router,
-    ) {
+  ) {
   }
 
   //guardar Token y navegar a la pantalla Home
   ngOnInit(): void {
-    if (localStorage.getItem("user")) {
-      this._router.navigate(['/home']);
-    }
+   
   }
 
 
-  navRegister(){
+  navRegister() {
     this._router.navigate(['/register']);
   }
 
@@ -51,7 +50,7 @@ export class LoginComponent  implements OnInit{
     }
 
 
-    let user: UserInterface = {
+    let user: CredencialInterface = {
       user: this.nombreInput,
       password: this.claveInput,
     }
@@ -61,33 +60,24 @@ export class LoginComponent  implements OnInit{
     this.isLoading = false;
 
     if (!res.success) {
-      console.error(res.message);
       this._widgetService.openSnackbar("Algo salió mal, intentalo más tarde");
       return;
     }
 
-    let response:ResApiInterface = res.message;
-
-    
-    if(!response.success){
-      this._widgetService.openSnackbar(response.message);
-      return;
-    }
+    let response:ResApiInterface = res.data;
 
 
-    //Sesion permanente
-    if (this.saveMyData) {
-      //guardar el usuario
-      localStorage.setItem('user', user.user);
-      
-    }
-    else {
-      // sesion no permanente
-      sessionStorage.setItem('user', user.user);
-    }
+    let resUser: UserInterface = response.data;
+
+    // sesion no permanente
+    sessionStorage.setItem('user', resUser.usuario);
+    sessionStorage.setItem('token', resUser.clave);
 
     //Si el usuario esta correcto
-     this._router.navigate(['/home']);
+    //  this._router.navigate(['/home']);
+
+    console.log(resUser);
+    
   }
 
   //Permanencia de la sesión

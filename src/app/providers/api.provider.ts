@@ -1,3 +1,3 @@
 export const ApiProvider = {
-    baseUrl: "http://localhost:8080/api/"
+    baseUrl: "https://localhost:7037/api/"
 }

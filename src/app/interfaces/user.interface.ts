@@ -1,4 +1,7 @@
 export interface UserInterface {
-    user: string;
-    password:   string;
+    id:      number;
+    usuario: string;
+    clave:   string;
+    correo:  string;
+    rol_Id:  number;
 }

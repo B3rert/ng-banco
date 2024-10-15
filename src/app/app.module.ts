@@ -25,6 +25,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { DialogActionsComponent } from './components/dialog-actions/dialog-actions.component';
 import { ProgressComponent } from './components/progress/progress.component';
+import { routing } from './app.routing';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { ProgressComponent } from './components/progress/progress.component';
     ProgressComponent
   ],
   imports: [
+    routing,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
