@@ -52,8 +52,8 @@ export class LoginComponent  implements OnInit{
 
 
     let user: UserInterface = {
-      usuario: this.nombreInput,
-      clave: this.claveInput,
+      user: this.nombreInput,
+      password: this.claveInput,
     }
 
     this.isLoading = true;
@@ -78,12 +78,12 @@ export class LoginComponent  implements OnInit{
     //Sesion permanente
     if (this.saveMyData) {
       //guardar el usuario
-      localStorage.setItem('user', user.usuario);
+      localStorage.setItem('user', user.user);
       
     }
     else {
       // sesion no permanente
-      sessionStorage.setItem('user', user.usuario);
+      sessionStorage.setItem('user', user.user);
     }
 
     //Si el usuario esta correcto

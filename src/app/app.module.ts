@@ -24,6 +24,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { DialogActionsComponent } from './components/dialog-actions/dialog-actions.component';
+import { ProgressComponent } from './components/progress/progress.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { DialogActionsComponent } from './components/dialog-actions/dialog-actio
     AccountsComponent,
     ServicesComponent,
     HistoryComponent,
-    DialogActionsComponent
+    DialogActionsComponent,
+    ProgressComponent
   ],
   imports: [
     HttpClientModule,

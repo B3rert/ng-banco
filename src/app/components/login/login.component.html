@@ -1,58 +1,61 @@
-<mat-toolbar>
-  <img class="logo" src="assets/logo.png" alt="logo">
-  <span class="textLogo">Banco del Monte</span>
-
-  <span class="spacer"></span>
-</mat-toolbar>
-
-<div class="container_page">
-
-  <div class="container">
-    <div class="row">
-      <div class="col-md-5 mx-auto text-center">
-        <img src="assets/logo.png" alt="">
-
-        <div class="login-right">
-          <span class="textLogo">Iniciar sesión</span>
-          <!-- Ingresar y validar datos ingresados en los inputs  -->
-          <form #loginForm="ngForm" (ngSubmit)="login()">
-            <div class="sign-in">
-              <!-- Correo o usuario -->
-              <h4>Usuario</h4>
-              <input type="text" required [(ngModel)]="nombreInput" name="nombre" autocomplete="off">
-            </div>
-            <div class="sign-in">
-              <!-- Contraseña  -->
-              <h4>Contraseña</h4>
-              <input *ngIf="!mostrarTexto" type="password" required [(ngModel)]="claveInput" name="clave">
-              <input *ngIf="mostrarTexto" type="text" required [(ngModel)]="claveInput" name="clave" autocomplete="off">
-              <br>
-              <!-- Ver y ocutar contraseña -->
-              <p *ngIf="!mostrarTexto" (click)="this.mostrarTexto = !this.mostrarTexto">Ver
-                contraseña</p>
-              <p *ngIf="mostrarTexto" (click)="this.mostrarTexto = !this.mostrarTexto">Ocultar
-                contraseña
-              </p>
-              <!-- <a>Olvidaste tu contraseña?</a> -->
-              <!-- <a>Registrate</a> -->
-            </div>
-            <!-- Recordar Datos -->
-            <div class="single-bottom">
-              <input type="checkbox" id="brand" value="" (click)="rememberMe()" checked *ngIf="saveMyData">
-              <input type="checkbox" id="brand" value="" (click)="rememberMe()" *ngIf="!saveMyData">
-              <label for="brand"><span></span>Recordar mis datos</label>
-            </div>
-            <!-- Ingresar, iniciar sesion -->
-            <div class="sign-in">
-              <input type="submit" value="Iniciar sesion">
-            </div>
-          </form>
+<app-progress *ngIf="isLoading"></app-progress>
+<ng-container *ngIf="!isLoading">
+  <mat-toolbar>
+    <img class="logo" src="assets/logo.png" alt="logo">
+    <span class="textLogo">Banco del Monte</span>
+  
+    <span class="spacer"></span>
+  </mat-toolbar>
+  
+  <div class="container_page">
+  
+    <div class="container">
+      <div class="row">
+        <div class="col-md-5 mx-auto text-center">
+          <img src="assets/logo.png" alt="">
+  
+          <div class="login-right">
+            <span class="textLogo">Iniciar sesión</span>
+            <!-- Ingresar y validar datos ingresados en los inputs  -->
+            <form #loginForm="ngForm" (ngSubmit)="login()">
+              <div class="sign-in">
+                <!-- Correo o usuario -->
+                <h4>Usuario</h4>
+                <input type="text" required [(ngModel)]="nombreInput" name="nombre" autocomplete="off">
+              </div>
+              <div class="sign-in">
+                <!-- Contraseña  -->
+                <h4>Contraseña</h4>
+                <input *ngIf="!mostrarTexto" type="password" required [(ngModel)]="claveInput" name="clave">
+                <input *ngIf="mostrarTexto" type="text" required [(ngModel)]="claveInput" name="clave" autocomplete="off">
+                <br>
+                <!-- Ver y ocutar contraseña -->
+                <p *ngIf="!mostrarTexto" (click)="this.mostrarTexto = !this.mostrarTexto">Ver
+                  contraseña</p>
+                <p *ngIf="mostrarTexto" (click)="this.mostrarTexto = !this.mostrarTexto">Ocultar
+                  contraseña
+                </p>
+                <!-- <a>Olvidaste tu contraseña?</a> -->
+                <!-- <a>Registrate</a> -->
+              </div>
+              <!-- Recordar Datos -->
+              <div class="single-bottom">
+                <input type="checkbox" id="brand" value="" (click)="rememberMe()" checked *ngIf="saveMyData">
+                <input type="checkbox" id="brand" value="" (click)="rememberMe()" *ngIf="!saveMyData">
+                <label for="brand"><span></span>Recordar mis datos</label>
+              </div>
+              <!-- Ingresar, iniciar sesion -->
+              <div class="sign-in">
+                <input type="submit" value="Iniciar sesion">
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
+  
+  
+  
+  
   </div>
-
-
-
-
-</div>
+</ng-container>
