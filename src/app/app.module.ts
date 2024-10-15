@@ -12,6 +12,18 @@ import { SettingsComponent } from './components/settings/settings.component';
 import { AccountsComponent } from './components/accounts/accounts.component';
 import { ServicesComponent } from './components/services/services.component';
 import { HistoryComponent } from './components/history/history.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+
+
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { DialogActionsComponent } from './components/dialog-actions/dialog-actions.component';
 
 @NgModule({
   declarations: [
@@ -25,10 +37,22 @@ import { HistoryComponent } from './components/history/history.component';
     SettingsComponent,
     AccountsComponent,
     ServicesComponent,
-    HistoryComponent
+    HistoryComponent,
+    DialogActionsComponent
   ],
   imports: [
-    BrowserModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    NgbModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatSnackBarModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
