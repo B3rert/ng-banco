@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
 
   //guardar Token y navegar a la pantalla Home
   ngOnInit(): void {
-   
+
   }
 
 
@@ -64,20 +64,40 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    let response:ResApiInterface = res.data;
+    let response: ResApiInterface = res.data;
 
+    if (!response.success) {
+      this._widgetService.openSnackbar("Usuario o contraseña icnorrectos");
+      return;
+    }
 
     let resUser: UserInterface = response.data;
+
+
 
     // sesion no permanente
     sessionStorage.setItem('user', resUser.usuario);
     sessionStorage.setItem('token', resUser.clave);
 
     //Si el usuario esta correcto
-    //  this._router.navigate(['/home']);
 
-    console.log(resUser);
-    
+    switch (resUser.rol_Id) {
+      case 1 || 2:
+        this._router.navigate(['/cajero']);
+
+        break;
+
+      case 4:
+        this._router.navigate(['/cliente']);
+        break;
+      default:
+
+        this._widgetService.openSnackbar("No se asignado un rol para este usuario");
+        break;
+    }
+
+
+
   }
 
   //Permanencia de la sesión
