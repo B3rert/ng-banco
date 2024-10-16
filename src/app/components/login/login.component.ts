@@ -78,25 +78,10 @@ export class LoginComponent implements OnInit {
     // sesion no permanente
     sessionStorage.setItem('user', resUser.usuario);
     sessionStorage.setItem('token', resUser.clave);
+    sessionStorage.setItem('rol', resUser.rol_Id.toString());
 
     //Si el usuario esta correcto
-
-    switch (resUser.rol_Id) {
-      case 1 || 2:
-        this._router.navigate(['/cajero']);
-
-        break;
-
-      case 4:
-        this._router.navigate(['/cliente']);
-        break;
-      default:
-
-        this._widgetService.openSnackbar("No se asignado un rol para este usuario");
-        break;
-    }
-
-
+    this._router.navigate(['/home']);
 
   }
 

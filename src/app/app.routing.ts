@@ -8,8 +8,7 @@ type PathMatch = "full" | "prefix" | undefined;
 const appRoutes = [
 
   { path: 'login', component: LoginComponent },
-  { path: 'cliente', component: AccountsComponent },
-  { path: 'cajero', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' as PathMatch },
   { path: '**', redirectTo: '/login', pathMatch: 'full' as PathMatch }
 ];
