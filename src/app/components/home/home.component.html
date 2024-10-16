@@ -1,1 +1,19 @@
-<p>home works!</p>
+<app-progress *ngIf="isLoading"></app-progress>
+
+<ng-container>
+
+    <mat-toolbar>
+        <img class="logo" src="assets/logo.png" alt="logo">
+        <span class="textLogo">Banco del Monte</span>
+
+        <span class="spacer"></span>
+        <button mat-icon-button  matTooltip="Cerrar sesión">
+            <mat-icon>power_settings_new</mat-icon>
+          </button>
+    </mat-toolbar>
+
+    <div class="container">
+        <!-- <input class="form-control" type="text" placeholder="Default input"> -->
+
+    </div>
+</ng-container>

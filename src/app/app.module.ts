@@ -16,16 +16,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { routing } from './app.routing';
+import { ProgressComponent } from './components/progress/progress.component';
+import { DialogActionsComponent } from './components/dialog-actions/dialog-actions.component';
 
-
+import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { DialogActionsComponent } from './components/dialog-actions/dialog-actions.component';
-import { ProgressComponent } from './components/progress/progress.component';
-import { routing } from './app.routing';
 
 @NgModule({
   declarations: [
@@ -56,7 +56,7 @@ import { routing } from './app.routing';
     MatButtonModule,
     MatDialogModule,
     MatSnackBarModule,
-
+    MatTooltipModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
