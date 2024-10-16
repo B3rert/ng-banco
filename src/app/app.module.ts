@@ -26,6 +26,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { NewAccountComponent } from './components/new-account/new-account.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     ServicesComponent,
     HistoryComponent,
     DialogActionsComponent,
-    ProgressComponent
+    ProgressComponent,
+    NewAccountComponent
   ],
   imports: [
     routing,

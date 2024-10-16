@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,18 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
-  isLoading:boolean = false;
+  isLoading: boolean = false;
+
+  /**
+   *
+   */
+  constructor(private _router: Router) {
+
+  }
+
+  navigateNewAccount() {
+    this._router.navigate(['/new-account']);
+
+  }
 
 }
