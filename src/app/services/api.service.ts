@@ -15,18 +15,23 @@ export class ApiService {
             //Uso del api
             const res = await firstValueFrom(api());
 
+            //Resultado del api
+            const response: ResApiInterface = res.body as ResApiInterface;
 
             //Retronarn respuesta correcta
             return {
-                data: res,
+                data: response.data,
                 success: true,
             };
         } catch (err: any) {
-            return {
-                data: err,
+            //Si existen errores
+            let resApi: ResApiInterface= {
                 success: false,
+                data: err?.error?.data || err.message || 'Unknown error',
             };
+
             //Retonra el error con la interfaz requerida
+            return resApi;
         }
     }
 
