@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./new-account.component.scss']
 })
 export class NewAccountComponent {
+  isLoading: boolean = false;
 
 }

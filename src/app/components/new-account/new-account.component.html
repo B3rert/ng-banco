@@ -1,1 +1,29 @@
-<p>new-account works!</p>
+<app-progress *ngIf="isLoading"></app-progress>
+
+<ng-container *ngIf="!isLoading">
+    <mat-toolbar>
+        <img class="logo" src="assets/logo.png" alt="logo">
+        <span class="textLogo">Banco del Monte</span>
+
+        <span class="spacer"></span>
+        <!-- <button mat-icon-button  matTooltip="Cerrar sesión">
+            <mat-icon>power_settings_new</mat-icon>
+          </button> -->
+    </mat-toolbar>
+
+    <div class="container">
+        <div class="row">
+            <h3 class="title">Nueva Cuenta</h3>
+        </div>
+        <p>DPI</p>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" >
+            <button class="btn btn-outline-secondary" type="button" >Buscar</button>
+          </div>
+          
+          <p>Nombres</p>
+          <input class="form-control" type="text" >
+          <p>Apellido</p>
+          <input class="form-control" type="text" >
+        </div>
+</ng-container>
