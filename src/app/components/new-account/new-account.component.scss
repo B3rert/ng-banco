@@ -12,9 +12,17 @@
 .appBar{
     position: fixed;
     top: 0;
+    z-index:100 ;
 }
 
 .main{
     margin-top: 65px;
     padding-bottom: 20px;
+}
+
+.confirmBtn{
+    margin-top: 20px;
+    width: 300px;
+    background-color: green;
+    color: #fff !important;
 }

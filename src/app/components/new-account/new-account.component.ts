@@ -126,4 +126,25 @@ export class NewAccountComponent implements OnInit {
 
 
   }
+
+  createAccount(){
+
+    if(
+      !this.cui || 
+      !this.cliente.nombre || 
+      !this.cliente.apellido || 
+      !this.cliente.direccion || 
+      !this.cliente.fecha_nacimiento || 
+      !this.cliente.telefono || 
+      !this.tipoCuenta
+    ){
+      this._widgetService.openSnackbar("Por favor, completa todos los campos");
+      return;
+    }
+
+
+    //crear usuario
+
+
+  }
 }

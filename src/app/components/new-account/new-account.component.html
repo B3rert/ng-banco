@@ -23,7 +23,7 @@
         </div>
         </form>
       
-        <form>
+        <form  #cunetaForm="ngForm" (ngSubmit)="createAccount()">
             <label class="labeltxt">Nombres</label>
             <input class="form-control" type="text"  [(ngModel)]="cliente!.nombre" name="nombres" required="">
             <label class="labeltxt">Apellido</label>
@@ -56,8 +56,11 @@
                 </div>
                
             </div>
-            <br>
-            <button type="submit" mat-stroked-button>Crear</button>
+            <div class="d-flex">
+                <span class="spacer"></span>
+                <button class="confirmBtn" type="submit" mat-stroked-button>Crear</button>
+            
+            </div>
         </form>
     </div>
 </ng-container>
