@@ -3,15 +3,26 @@ import { Injectable } from '@angular/core';
 import { ApiProvider } from '../providers/api.provider';
 import { ResApiInterface } from '../interfaces/res-api.interface';
 import { CredencialInterface } from '../interfaces/credencial.interface';
+import { NewUserInterface } from '../interfaces/new-user.interface';
 
 @Injectable()
-export class LoginService{
+export class UserService {
     private _urlBase: string = "";
 
     //inicializar http
     constructor(private _http: HttpClient) {
         //asignacion de urlBase
         this._urlBase = ApiProvider.baseUrl;
+    }
+
+
+    //funcion que va a realizar consumo privado
+    postUser(user: NewUserInterface) {
+        //configurar headers
+        let paramsStr = JSON.stringify(user); //JSON to String
+        let headers = new HttpHeaders({ "Content-Type": "application/json" });
+        //consumo de api
+        return this._http.post(`${this._urlBase}Usuario/crear`, paramsStr, { headers: headers,  observe: 'response' });
     }
 
 

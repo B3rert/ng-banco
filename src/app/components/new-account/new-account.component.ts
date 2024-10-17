@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker.module';
 import { ClienteInterface } from 'src/app/interfaces/cliente.interface';
+import { NewUserInterface } from 'src/app/interfaces/new-user.interface';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { TipoCuentaInterface } from 'src/app/interfaces/tipo-cuenta.interface';
+import { UserInterface } from 'src/app/interfaces/user.interface';
 import { ApiService } from 'src/app/services/api.service';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { CuentaService } from 'src/app/services/cuenta.service';
+import { UserService } from 'src/app/services/usuario.service';
 import { WidgetService } from 'src/app/services/widget.service';
 
 @Component({
@@ -16,6 +19,7 @@ import { WidgetService } from 'src/app/services/widget.service';
     WidgetService,
     CuentaService,
     ClienteService,
+    UserService,
   ]
 })
 export class NewAccountComponent implements OnInit {
@@ -37,6 +41,8 @@ export class NewAccountComponent implements OnInit {
     usuario_id:0
   };
 
+  user?:UserInterface;
+
 
   /**
    *
@@ -45,6 +51,7 @@ export class NewAccountComponent implements OnInit {
     private _cuentaService: CuentaService,
     private _widgetService: WidgetService,
     private _clienteService:ClienteService,
+    private _userService:UserService,
   ) {
 
 
@@ -127,6 +134,29 @@ export class NewAccountComponent implements OnInit {
 
   }
 
+  async createUser(){
+
+    const user :NewUserInterface ={
+      apellido: this.cliente.apellido,
+      nombre: this.cliente.nombre,
+      rol: 4,// ROl: usuario,  
+    } 
+
+    const api = () => this._userService.postUser(user);
+
+    const res: ResApiInterface = await ApiService.apiUse(api);
+
+    if (!res.success) {
+      this._widgetService.openSnackbar("Algo salió mal, intentalo mas tarde.");
+      console.error(res);
+      return false;
+    }
+
+    this.user = res.data;
+
+    return true;
+  }
+
   createAccount(){
 
     if(
@@ -134,7 +164,7 @@ export class NewAccountComponent implements OnInit {
       !this.cliente.nombre || 
       !this.cliente.apellido || 
       !this.cliente.direccion || 
-      !this.cliente.fecha_nacimiento || 
+      !this.fechaNacimiento || 
       !this.cliente.telefono || 
       !this.tipoCuenta
     ){
@@ -142,8 +172,15 @@ export class NewAccountComponent implements OnInit {
       return;
     }
 
+    this.isLoading = true;
 
     //crear usuario
+    let resUser  = this.createUser();
+
+    //TODO:veridicar respuest
+
+    this.isLoading = false;
+
 
 
   }
