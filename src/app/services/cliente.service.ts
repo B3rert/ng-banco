@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { ApiProvider } from '../providers/api.provider';
 
 @Injectable()
-export class CuentaService{
+export class ClienteService{
+
     private _urlBase: string = "";
 
     //inicializar http
@@ -11,12 +12,9 @@ export class CuentaService{
         //asignacion de urlBase
         this._urlBase = ApiProvider.baseUrl;
     }
-
-    //funcion que va a realizar consumo privado
-    getTipoCuenta() {
+  
+    getTipoCuentaDpi(cui:string) {
         //consumo de api
-        return this._http.get(`${this._urlBase}Cuenta/tipo`,  {  observe: 'response' });
+        return this._http.get(`${this._urlBase}Cliente/${cui}`,  {  observe: 'response' });
     }
-      //funcion que va a realizar consumo privado
-     
 }
