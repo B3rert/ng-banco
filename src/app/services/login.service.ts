@@ -16,7 +16,7 @@ export class LoginService{
 
 
     //funcion que va a realizar consumo privado
-    private _postLogin(user: CredencialInterface) {
+     postLogin(user: CredencialInterface) {
         //configurar headers
         let paramsStr = JSON.stringify(user); //JSON to String
         let headers = new HttpHeaders({ "Content-Type": "application/json" });
@@ -24,30 +24,5 @@ export class LoginService{
         return this._http.post(`${this._urlBase}Usuario/login`, paramsStr, { headers: headers });
     }
 
-    //funcion asyncrona con promise
-
-    postLogin(user: CredencialInterface): Promise<ResApiInterface> {
-        //consumo primer servicio
-        return new Promise((resolve, reject) => {
-            this._postLogin(user).subscribe(
-                res => {
-                    let resApi: ResApiInterface = {
-                        success: true,
-                        data: res
-                    }
-                    resolve(resApi)
-                },
-                //si algo sale mal
-                err => {
-                    let resApi: ResApiInterface = {
-                        success: false,
-                        data: err
-                    }
-                    resolve(resApi);
-
-                }
-            );
-
-        });
-    }
+    
 }

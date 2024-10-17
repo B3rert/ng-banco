@@ -5,6 +5,7 @@ import { CredencialInterface } from 'src/app/interfaces/credencial.interface';
 import { LoginService } from 'src/app/services/login.service';
 import { WidgetService } from 'src/app/services/widget.service';
 import { UserInterface } from 'src/app/interfaces/user.interface';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-login',
@@ -56,7 +57,10 @@ export class LoginComponent implements OnInit {
     }
 
     this.isLoading = true;
-    let res: ResApiInterface = await this._loginService.postLogin(user);
+
+    const apiLogin = ()=>  this._loginService.postLogin(user);
+
+    let res: ResApiInterface = await ApiService.apiUse(apiLogin);
     this.isLoading = false;
 
     if (!res.success) {

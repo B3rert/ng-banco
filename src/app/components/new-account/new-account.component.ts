@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker.module';
 
 @Component({
   selector: 'app-new-account',
@@ -7,5 +8,10 @@ import { Component } from '@angular/core';
 })
 export class NewAccountComponent {
   isLoading: boolean = false;
+  model?: NgbDateStruct;
 
+
+  searchCui(){
+    
+  }
 }
