@@ -36,6 +36,7 @@ export class NewAccountComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.loadData();
   }
 
   

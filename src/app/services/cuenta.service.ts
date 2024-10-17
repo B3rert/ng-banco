@@ -15,6 +15,6 @@ export class CuentaService{
     //funcion que va a realizar consumo privado
     getTipoCuenta() {
         //consumo de api
-        return this._http.get(`${this._urlBase}Cuenta/tipo`);
+        return this._http.get(`${this._urlBase}Cuenta/tipo`,  {  observe: 'response' });
     }
 }
