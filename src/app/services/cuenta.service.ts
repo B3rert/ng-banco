@@ -29,6 +29,10 @@ export class CuentaService {
         //consumo de api
         return this._http.get(`${this._urlBase}Cuenta/tipo`, { observe: 'response' });
     }
-    //funcion que va a realizar consumo privado
+
+    getCuentaUser(user:string) {
+        //consumo de api
+        return this._http.get(`${this._urlBase}Cuenta/usuario/${user}`, { observe: 'response' });
+    }
 
 }
