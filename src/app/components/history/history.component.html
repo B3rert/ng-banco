@@ -1,1 +1,18 @@
-<p>history works!</p>
+<app-progress *ngIf="isLoading"></app-progress>
+
+<ng-container *ngIf="!isLoading">
+
+    <mat-toolbar class="appBar">
+        <button mat-icon-button matTooltip="Regresar" (click)="backPage()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <img class="logo" src="assets/logo.png" alt="logo">
+        <span class="textLogo">Banco del Monte</span>
+
+        <span class="spacer"></span>
+
+    </mat-toolbar>
+
+    <div class="container main">
+    </div>
+</ng-container>
