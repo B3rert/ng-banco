@@ -49,7 +49,7 @@ export class NewAccountComponent implements OnInit {
 
   user?: UserInterface;
   cuenta?: CuentaInterface;
-  tarjeta?:TarjetaInterface;
+  tarjeta?: TarjetaInterface;
 
 
   /**
@@ -60,7 +60,7 @@ export class NewAccountComponent implements OnInit {
     private _widgetService: WidgetService,
     private _clienteService: ClienteService,
     private _userService: UsuarioService,
-    private _tarjetaService:TarjetaService,
+    private _tarjetaService: TarjetaService,
   ) {
 
 
@@ -79,6 +79,26 @@ export class NewAccountComponent implements OnInit {
     this.isLoading = false;
   }
 
+
+  emptyForm() {
+    this.fechaNacimiento = undefined;
+    this.tipoCuenta = undefined;
+    this.cui = "";
+    this.cliente = {
+      apellido: "",
+      direccion: "",
+      dpi: "",
+      fecha_nacimiento: new Date(),
+      nombre: "",
+      telefono: "",
+      usuario_id: 0,
+      correo: ""
+    };
+
+    this.user = undefined;
+    this.cuenta = undefined;
+    this.tarjeta = undefined;
+  }
 
   async createAccount() {
 
@@ -152,7 +172,7 @@ export class NewAccountComponent implements OnInit {
   async searchCui() {
 
     if (!this.cui) {
-      this._widgetService.openSnackbar("Inggresa un CUI para buscar");
+      this._widgetService.openSnackbar("Ingresa un CUI para buscar");
 
       return;
     }
@@ -166,7 +186,7 @@ export class NewAccountComponent implements OnInit {
 
   }
 
-  async createUser() : Promise<boolean>{
+  async createUser(): Promise<boolean> {
 
     const user: NewUserInterface = {
       apellido: this.cliente.apellido,
@@ -190,8 +210,7 @@ export class NewAccountComponent implements OnInit {
   }
 
 
-  async createClient() : Promise<boolean>{
-
+  async createClient(): Promise<boolean> {
 
     const api = () => this._clienteService.postCliente(this.cliente);
 
@@ -208,16 +227,16 @@ export class NewAccountComponent implements OnInit {
     return true;
   }
 
-  async createCard(): Promise<boolean>{
+  async createCard(): Promise<boolean> {
 
 
     let idTarjeta = 0;
-    if(this.tipoCuenta!.id == 2){ //monetaria = debito
+    if (this.tipoCuenta!.id == 2) { //monetaria = debito
 
       idTarjeta = 1;
     }
 
-    if(this.tipoCuenta!.id == 3){ //credito = credito
+    if (this.tipoCuenta!.id == 3) { //credito = credito
 
       idTarjeta = 2;
     }
@@ -272,6 +291,16 @@ export class NewAccountComponent implements OnInit {
         return;
       }
 
+      //asiganr fecha de nacimiento
+      let fechaDate: Date = new Date();
+      fechaDate.setDate(this.fechaNacimiento.day);
+      fechaDate.setMonth(this.fechaNacimiento.month - 1);
+      fechaDate.setFullYear(this.fechaNacimiento.year);
+
+
+      this.cliente.fecha_nacimiento = fechaDate;
+      this.cliente.dpi = this.cui;
+      this.cliente.usuario_id = this.user!.id;
 
       //crear cliente
       let resClient = await this.createClient();
@@ -292,7 +321,7 @@ export class NewAccountComponent implements OnInit {
 
 
     //si la cuenat es monetaria crear tarjeta
-    if(this.tipoCuenta.id != 1){
+    if (this.tipoCuenta.id != 1) {
       //crear tarjeta
       let resTarjeta = await this.createCard();
     }
@@ -300,6 +329,12 @@ export class NewAccountComponent implements OnInit {
     this.isLoading = false;
 
 
+    this._widgetService.openSnackbar("Cuenta creada exitosamente");
+    
+    //TODO:Generar informe
 
+
+    //Limpiar formulario
+    this.emptyForm();
   }
 }
