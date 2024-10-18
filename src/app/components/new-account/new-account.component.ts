@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker.module';
 import { ClienteInterface } from 'src/app/interfaces/cliente.interface';
+import { CuentaInterface } from 'src/app/interfaces/cuenta.interface';
+import { NewAccountInterface } from 'src/app/interfaces/new-account.interface';
 import { NewUserInterface } from 'src/app/interfaces/new-user.interface';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { TipoCuentaInterface } from 'src/app/interfaces/tipo-cuenta.interface';
@@ -38,10 +40,11 @@ export class NewAccountComponent implements OnInit {
     nombre: "",
     telefono: "",
     usuario_id: 0,
-    correo:""
+    correo: ""
   };
 
   user?: UserInterface;
+  cuenta?: CuentaInterface;
 
 
   /**
@@ -70,6 +73,29 @@ export class NewAccountComponent implements OnInit {
     this.isLoading = false;
   }
 
+
+  async createAccount() {
+
+
+    const newCuenta: NewAccountInterface = {
+      cliente_id: this.cliente.id!,
+      tipo_cuenta_id: this.tipoCuenta!.id,
+    }
+
+    const api = () => this._cuentaService.postCuenta(newCuenta);
+
+    const res: ResApiInterface = await ApiService.apiUse(api);
+
+    if (!res.success) {
+      this._widgetService.openSnackbar("Algo salió mal, intentalo mas tarde.");
+      console.error(res);
+      return false;
+    }
+
+    this.cuenta = res.data;
+
+    return true;
+  }
 
   async loadClienteCui(): Promise<boolean> {
     const api = () => this._clienteService.getTipoCuentaDpi(this.cui);
@@ -208,7 +234,7 @@ export class NewAccountComponent implements OnInit {
 
       //crear cliente
       let resClient = await this.createClient();
-      
+
       if (!resClient) {
         this.isLoading = false;
         return;
@@ -216,8 +242,19 @@ export class NewAccountComponent implements OnInit {
 
     }
 
-      await  this.confirmAccount();
+    let resCuenta = await this.createAccount();
 
+    if (!resCuenta) {
+      this.isLoading = false;
+      return;
+    }
+
+
+    //si la cuenat es monetaria crear tarjeta
+    if(this.tipoCuenta.id == 2){
+
+      //crear tarjeta
+    }
 
     this.isLoading = false;
 
