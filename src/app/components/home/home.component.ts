@@ -30,4 +30,8 @@ export class HomeComponent {
 
   }
 
+  navigateCards(){
+    this._router.navigate(['/cards']);
+  }
+
 }

@@ -24,5 +24,9 @@ export class TarjetaService{
         return this._http.post(`${this._urlBase}Tarjeta`, paramsStr, { headers: headers, observe: 'response' });
     }
 
+    getTarjetaUser(user:string) {
+        //consumo de api
+        return this._http.get(`${this._urlBase}Tarjeta/usuario/${user}`, { observe: 'response' });
+    }
 
 }
