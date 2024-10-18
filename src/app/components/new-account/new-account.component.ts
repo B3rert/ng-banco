@@ -15,6 +15,8 @@ import { CuentaService } from 'src/app/services/cuenta.service';
 import { TarjetaService } from 'src/app/services/tarjeta.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { WidgetService } from 'src/app/services/widget.service';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-new-account',
@@ -61,6 +63,7 @@ export class NewAccountComponent implements OnInit {
     private _clienteService: ClienteService,
     private _userService: UsuarioService,
     private _tarjetaService: TarjetaService,
+    private _location: Location
   ) {
 
 
@@ -77,6 +80,10 @@ export class NewAccountComponent implements OnInit {
     this.isLoading = true;
     await this.loadTipoCuenta();
     this.isLoading = false;
+  }
+
+  backPage(){
+    this._location.back();
   }
 
 
