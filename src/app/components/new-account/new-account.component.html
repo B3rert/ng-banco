@@ -23,7 +23,7 @@
         </div>
         </form>
       
-        <form  #cunetaForm="ngForm" (ngSubmit)="createAccount()">
+        <form  #cunetaForm="ngForm" (ngSubmit)="confirmAccount()">
             <label class="labeltxt">Nombres</label>
             <input class="form-control" type="text"  [(ngModel)]="cliente!.nombre" name="nombres" required="">
             <label class="labeltxt">Apellido</label>
@@ -45,6 +45,9 @@
             <input class="form-control" type="text" [(ngModel)]="cliente!.direccion" name="direccion">
             <label class="labeltxt">Teléfono</label>
             <input class="form-control" type="tel" [(ngModel)]="cliente!.telefono" name="tel">
+
+            <label class="labeltxt">Correo</label>
+            <input class="form-control" type="email" [(ngModel)]="cliente!.correo" name="correo">
 
             <label class="labeltxt">Tipo cuenta</label>
             <div class="card card_cuentas">

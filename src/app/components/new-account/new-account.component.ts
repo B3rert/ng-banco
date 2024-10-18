@@ -27,21 +27,21 @@ export class NewAccountComponent implements OnInit {
   isLoading: boolean = false;
   fechaNacimiento?: NgbDateStruct;
   tiposCuenta: TipoCuentaInterface[] = [];
-  tipoCuenta?:TipoCuentaInterface;
-  cui:string = "";
+  tipoCuenta?: TipoCuentaInterface;
+  cui: string = "";
 
-  cliente:ClienteInterface ={
-    apellido:"",
-    direccion:"",
-    dpi:"",
+  cliente: ClienteInterface = {
+    apellido: "",
+    direccion: "",
+    dpi: "",
     fecha_nacimiento: new Date(),
-    id:0,
-    nombre:"",
-    telefono:"",
-    usuario_id:0
+    nombre: "",
+    telefono: "",
+    usuario_id: 0,
+    correo:""
   };
 
-  user?:UserInterface;
+  user?: UserInterface;
 
 
   /**
@@ -50,8 +50,8 @@ export class NewAccountComponent implements OnInit {
   constructor(
     private _cuentaService: CuentaService,
     private _widgetService: WidgetService,
-    private _clienteService:ClienteService,
-    private _userService:UserService,
+    private _clienteService: ClienteService,
+    private _userService: UserService,
   ) {
 
 
@@ -62,7 +62,7 @@ export class NewAccountComponent implements OnInit {
     this.loadData();
   }
 
-  
+
 
   async loadData() {
     this.isLoading = true;
@@ -71,7 +71,7 @@ export class NewAccountComponent implements OnInit {
   }
 
 
-  async loadClienteCui():Promise<boolean>{
+  async loadClienteCui(): Promise<boolean> {
     const api = () => this._clienteService.getTipoCuentaDpi(this.cui);
 
     const res: ResApiInterface = await ApiService.apiUse(api);
@@ -82,20 +82,20 @@ export class NewAccountComponent implements OnInit {
       return false;
     }
 
-    if(res.data == "Cliente no encontrado."){
+    if (res.data == "Cliente no encontrado.") {
       this._widgetService.openSnackbar("Cliente no encontrado.");
       return false;
     }
 
     this.cliente = res.data;
 
-    
+
     let date = new Date(this.cliente.fecha_nacimiento)
 
     this.fechaNacimiento = {
-      year:date.getFullYear(),
-      day: date.getDate() +1,
-      month :date.getMonth(),
+      year: date.getFullYear(),
+      day: date.getDate() + 1,
+      month: date.getMonth(),
     }
 
     return true;
@@ -119,7 +119,7 @@ export class NewAccountComponent implements OnInit {
 
   async searchCui() {
 
-    if(!this.cui){
+    if (!this.cui) {
       this._widgetService.openSnackbar("Inggresa un CUI para buscar");
 
       return;
@@ -127,20 +127,20 @@ export class NewAccountComponent implements OnInit {
 
 
     this.isLoading = true;
-    let res =  await this.loadClienteCui();
+    let res = await this.loadClienteCui();
     this.isLoading = false;
 
 
 
   }
 
-  async createUser(){
+  async createUser() {
 
-    const user :NewUserInterface ={
+    const user: NewUserInterface = {
       apellido: this.cliente.apellido,
       nombre: this.cliente.nombre,
       rol: 4,// ROl: usuario,  
-    } 
+    }
 
     const api = () => this._userService.postUser(user);
 
@@ -157,27 +157,67 @@ export class NewAccountComponent implements OnInit {
     return true;
   }
 
-  createAccount(){
 
-    if(
-      !this.cui || 
-      !this.cliente.nombre || 
-      !this.cliente.apellido || 
-      !this.cliente.direccion || 
-      !this.fechaNacimiento || 
-      !this.cliente.telefono || 
+  async createClient() {
+
+
+    const api = () => this._clienteService.postCliente(this.cliente);
+
+    const res: ResApiInterface = await ApiService.apiUse(api);
+
+    if (!res.success) {
+      this._widgetService.openSnackbar("Algo salió mal, intentalo mas tarde.");
+      console.error(res);
+      return false;
+    }
+
+    this.cliente = res.data;
+
+    return true;
+  }
+
+  async confirmAccount() {
+
+    if (
+      !this.cui ||
+      !this.cliente.nombre ||
+      !this.cliente.apellido ||
+      !this.cliente.direccion ||
+      !this.fechaNacimiento ||
+      !this.cliente.telefono ||
+      !this.cliente.correo ||
       !this.tipoCuenta
-    ){
+    ) {
       this._widgetService.openSnackbar("Por favor, completa todos los campos");
       return;
     }
 
     this.isLoading = true;
 
-    //crear usuario
-    let resUser  = this.createUser();
+    if (!this.cliente.id) {
 
-    //TODO:veridicar respuest
+      //crear usuario
+      let resUser = await this.createUser();
+
+
+      if (!resUser) {
+        this.isLoading = false;
+        return;
+      }
+
+
+      //crear cliente
+      let resClient = await this.createClient();
+      
+      if (!resClient) {
+        this.isLoading = false;
+        return;
+      }
+
+    }
+
+      await  this.confirmAccount();
+
 
     this.isLoading = false;
 
