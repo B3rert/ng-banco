@@ -6,7 +6,7 @@ import { CredencialInterface } from '../interfaces/credencial.interface';
 import { NewUserInterface } from '../interfaces/new-user.interface';
 
 @Injectable()
-export class UserService {
+export class UsuarioService {
     private _urlBase: string = "";
 
     //inicializar http

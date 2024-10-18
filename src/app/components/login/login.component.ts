@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { CredencialInterface } from 'src/app/interfaces/credencial.interface';
-import { UserService } from 'src/app/services/usuario.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 import { WidgetService } from 'src/app/services/widget.service';
 import { UserInterface } from 'src/app/interfaces/user.interface';
 
@@ -11,7 +11,7 @@ import { UserInterface } from 'src/app/interfaces/user.interface';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   providers: [
-    UserService,
+    UsuarioService,
     WidgetService,
   ]
 })
@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
 
   //Intancia de servicios
   constructor(
-    private _loginService: UserService,
+    private _loginService: UsuarioService,
     private _widgetService: WidgetService,
     private _router: Router,
   ) {

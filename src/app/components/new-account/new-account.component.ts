@@ -3,14 +3,17 @@ import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker.
 import { ClienteInterface } from 'src/app/interfaces/cliente.interface';
 import { CuentaInterface } from 'src/app/interfaces/cuenta.interface';
 import { NewAccountInterface } from 'src/app/interfaces/new-account.interface';
+import { NewCardInterface } from 'src/app/interfaces/new-card.interface';
 import { NewUserInterface } from 'src/app/interfaces/new-user.interface';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
+import { TarjetaInterface } from 'src/app/interfaces/tarjeta.interface';
 import { TipoCuentaInterface } from 'src/app/interfaces/tipo-cuenta.interface';
 import { UserInterface } from 'src/app/interfaces/user.interface';
 import { ApiService } from 'src/app/services/api.service';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { CuentaService } from 'src/app/services/cuenta.service';
-import { UserService } from 'src/app/services/usuario.service';
+import { TarjetaService } from 'src/app/services/tarjeta.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 import { WidgetService } from 'src/app/services/widget.service';
 
 @Component({
@@ -21,7 +24,8 @@ import { WidgetService } from 'src/app/services/widget.service';
     WidgetService,
     CuentaService,
     ClienteService,
-    UserService,
+    UsuarioService,
+    TarjetaService,
   ]
 })
 export class NewAccountComponent implements OnInit {
@@ -45,6 +49,7 @@ export class NewAccountComponent implements OnInit {
 
   user?: UserInterface;
   cuenta?: CuentaInterface;
+  tarjeta?:TarjetaInterface;
 
 
   /**
@@ -54,7 +59,8 @@ export class NewAccountComponent implements OnInit {
     private _cuentaService: CuentaService,
     private _widgetService: WidgetService,
     private _clienteService: ClienteService,
-    private _userService: UserService,
+    private _userService: UsuarioService,
+    private _tarjetaService:TarjetaService,
   ) {
 
 
@@ -160,7 +166,7 @@ export class NewAccountComponent implements OnInit {
 
   }
 
-  async createUser() {
+  async createUser() : Promise<boolean>{
 
     const user: NewUserInterface = {
       apellido: this.cliente.apellido,
@@ -184,7 +190,7 @@ export class NewAccountComponent implements OnInit {
   }
 
 
-  async createClient() {
+  async createClient() : Promise<boolean>{
 
 
     const api = () => this._clienteService.postCliente(this.cliente);
@@ -198,6 +204,41 @@ export class NewAccountComponent implements OnInit {
     }
 
     this.cliente = res.data;
+
+    return true;
+  }
+
+  async createCard(): Promise<boolean>{
+
+
+    let idTarjeta = 0;
+    if(this.tipoCuenta!.id == 2){ //monetaria = debito
+
+      idTarjeta = 1;
+    }
+
+    if(this.tipoCuenta!.id == 3){ //credito = credito
+
+      idTarjeta = 2;
+    }
+
+
+    const tarjeta: NewCardInterface = {
+      cuenta_id: this.cuenta!.id,
+      tipo_tarjeta_id: idTarjeta,
+    }
+
+    const api = () => this._tarjetaService.postTarjeta(tarjeta);
+
+    const res: ResApiInterface = await ApiService.apiUse(api);
+
+    if (!res.success) {
+      this._widgetService.openSnackbar("Algo salió mal, intentalo mas tarde.");
+      console.error(res);
+      return false;
+    }
+
+    this.tarjeta = res.data;
 
     return true;
   }
@@ -251,9 +292,9 @@ export class NewAccountComponent implements OnInit {
 
 
     //si la cuenat es monetaria crear tarjeta
-    if(this.tipoCuenta.id == 2){
-
+    if(this.tipoCuenta.id != 1){
       //crear tarjeta
+      let resTarjeta = await this.createCard();
     }
 
     this.isLoading = false;
