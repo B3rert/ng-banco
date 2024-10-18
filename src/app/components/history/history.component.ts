@@ -23,6 +23,7 @@ export class HistoryComponent {
   isLoading: boolean = false;
   transactions: TransaccionMesInterface[] = [];
   monthView:Date = new Date();
+  mesesAnteriores: { mes: string, año: number }[] = [];
 
   /**
    *
@@ -44,12 +45,22 @@ export class HistoryComponent {
 
   async loadData() {
     this.isLoading = true;
-    await this.loadRoles();
+    await this.loadTransactions();
     this.isLoading = false;
 
   }
 
-  async loadRoles(): Promise<boolean> {
+  generarMesesAnteriores(mes: number, año: number) {
+    for (let i = 0; i < 6; i++) {
+      const fecha = new Date(año, mes - i - 1); // Restamos 1 porque los meses empiezan en 0 en JavaScript
+      const nombreMes = fecha.toLocaleString('es-ES', { month: 'long' }); // Obtener nombre del mes en español
+      const añoMes = fecha.getFullYear();
+      
+      this.mesesAnteriores.push({ mes: nombreMes, año: añoMes });
+    }
+  }
+
+  async loadTransactions(): Promise<boolean> {
     const api = () => this._transaccionService.getTransaccionMes(
       this.idCuenta,
       this.monthView.getMonth() + 1,
