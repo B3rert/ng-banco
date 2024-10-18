@@ -17,6 +17,9 @@ export class HomeComponent {
 
   }
 
+  navigateNewUser(){
+    this._router.navigate(['/new-user']);
+  }
   navigateNewAccount() {
     this._router.navigate(['/new-account']);
 
