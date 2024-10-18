@@ -27,6 +27,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { NewAccountComponent } from './components/new-account/new-account.component';
+import { NewUserComponent } from './components/new-user/new-user.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { NewAccountComponent } from './components/new-account/new-account.compon
     HistoryComponent,
     DialogActionsComponent,
     ProgressComponent,
-    NewAccountComponent
+    NewAccountComponent,
+    NewUserComponent
   ],
   imports: [
     routing,
