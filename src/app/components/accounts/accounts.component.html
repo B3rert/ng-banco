@@ -21,7 +21,7 @@
         <div class="row">
             <p *ngIf="accounts.length == 0">No hay nada aquí</p>
             <ol class="list-group ">
-                <li class="list-group-item d-flex justify-content-between align-items-start list-group-item-action" *ngFor="let cuenta of accounts">
+                <li class="list-group-item d-flex justify-content-between align-items-start list-group-item-action" *ngFor="let cuenta of accounts"  (click)="navigateHistory(cuenta.id)">
                     <div class="ms-2 me-auto">
                         <div class="fw-bold">{{cuenta.numero_cuenta}}</div>
                         {{cuenta.tipo_cuenta}}
