@@ -25,4 +25,9 @@ export class HomeComponent {
 
   }
 
+  navigateAccounts(){
+    this._router.navigate(['/accounts']);
+
+  }
+
 }

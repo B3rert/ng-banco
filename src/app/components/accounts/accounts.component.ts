@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-accounts',
@@ -6,5 +7,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./accounts.component.scss']
 })
 export class AccountsComponent {
+  isLoading: boolean = false;
+
+
+  /**
+   *
+   */
+  constructor(private _location:Location) {
+    
+  }
+
+  backPage(){
+    this._location.back();
+  }
 
 }

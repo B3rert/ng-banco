@@ -13,6 +13,7 @@ const appRoutes = [
   { path: 'home', component: HomeComponent },
   { path: 'new-account', component: NewAccountComponent },
   { path: 'new-user', component: NewUserComponent },
+  { path: 'accounts', component: AccountsComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' as PathMatch },
   { path: '**', redirectTo: '/login', pathMatch: 'full' as PathMatch }
 ];
