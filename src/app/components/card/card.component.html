@@ -16,17 +16,19 @@
     <div class="container main">
 
         <div class="row">
-            <h3 class="title">Cuentas</h3>
+            <h3 class="title">Tarjetas</h3>
         </div>
         <div class="row">
             <p *ngIf="cards.length == 0">No hay nada aquí</p>
             <ol class="list-group ">
                 <li class="list-group-item d-flex justify-content-between align-items-start list-group-item-action" *ngFor="let card of cards"  (click)="navigateHistory(card.cuenta_id)">
                     <div class="ms-2 me-auto">
+                        Tarjeta de {{card.tipo_tarjeta}}
                         <div class="fw-bold">{{card.numero_tarjeta}}</div>
                         Cuenta: {{card.numero_cuenta}}
                     </div>
-                    <span class="badge text-bg-success rounded-pill">{{card.saldo | currency:'GTQ ':'code'}}</span>
+                    <span class="infoBadge estado badge text-bg-info rounded-pill" >{{card.estado_tarjeta}}</span> 
+                    <span class="infoBadge badge text-bg-success rounded-pill">{{card.saldo | currency:'GTQ ':'code'}}</span>
                 </li>
                 
             </ol>

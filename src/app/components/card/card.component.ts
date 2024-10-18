@@ -50,6 +50,11 @@ export class CardComponent {
     this._router.navigate(['/transactions', idCuenta]);
   }
 
+  changeStatusCard(){
+    console.log("Cambiar");
+    
+  }
+
   async getAccounts(): Promise<boolean> {
 
     const user = sessionStorage.getItem("user");
