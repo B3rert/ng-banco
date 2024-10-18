@@ -19,6 +19,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { routing } from './app.routing';
 import { ProgressComponent } from './components/progress/progress.component';
 import { DialogActionsComponent } from './components/dialog-actions/dialog-actions.component';
+import { NewAccountComponent } from './components/new-account/new-account.component';
+import { NewUserComponent } from './components/new-user/new-user.component';
+import { MonthsFilterComponent } from './components/months-filter/months-filter.component';
 
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -26,8 +29,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { NewAccountComponent } from './components/new-account/new-account.component';
-import { NewUserComponent } from './components/new-user/new-user.component';
+import {MatRadioModule} from '@angular/material/radio';
+
 
 @NgModule({
   declarations: [
@@ -45,7 +48,8 @@ import { NewUserComponent } from './components/new-user/new-user.component';
     DialogActionsComponent,
     ProgressComponent,
     NewAccountComponent,
-    NewUserComponent
+    NewUserComponent,
+    MonthsFilterComponent
   ],
   imports: [
     routing,
@@ -61,6 +65,7 @@ import { NewUserComponent } from './components/new-user/new-user.component';
     MatDialogModule,
     MatSnackBarModule,
     MatTooltipModule,
+    MatRadioModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

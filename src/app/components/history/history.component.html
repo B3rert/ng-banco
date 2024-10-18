@@ -19,9 +19,9 @@
         </div>
         <div class="row">
             <div class="d-flex">
-                <span>Movimientos de {{ monthView | date:'MMMM yyyy' }}</span>
+                <span>Movimientos de   {{ monthSelect!.monthName | titlecase }} {{ monthSelect!.year }}</span>
                 <span class="spacer"></span>
-                <button mat-icon-button  >
+                <button mat-icon-button  (click)="openMonthFilter()">
                     <mat-icon>calendar_month</mat-icon>
                   </button>
             </div>
