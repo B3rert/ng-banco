@@ -1,1 +1,71 @@
-<p>new-user works!</p>
+<app-progress *ngIf="isLoading"></app-progress>
+
+<ng-container *ngIf="!isLoading">
+    
+    <mat-toolbar class="appBar">
+        <button mat-icon-button  matTooltip="Regresar" (click)="backPage()">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+        <img class="logo" src="assets/logo.png" alt="logo">
+        <span class="textLogo">Banco del Monte</span>
+
+        <span class="spacer"></span>
+       
+    </mat-toolbar>
+
+    <div class="container main">
+        <div class="row">
+            <h3 class="title">Nuevo Usuario</h3>
+        </div>
+        <label class="labeltxt">CUI</label>
+        <form  #loginForm="ngForm" (ngSubmit)="searchCui()" >  
+            <div class="input-group mb-3">
+            <input type="text" class="form-control" [(ngModel)]="cui" name="cui" required>
+            <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+        </div>
+        </form>
+      
+        <form  #cunetaForm="ngForm" (ngSubmit)="confirmAccount()">
+            <label class="labeltxt">Nombres</label>
+            <input class="form-control" type="text"  [(ngModel)]="cliente!.nombre" name="nombres" required="">
+            <label class="labeltxt">Apellido</label>
+            <input class="form-control" type="text" [(ngModel)]="cliente!.apellido" name="apellidos" required="">
+
+            <label class="labeltxt">Fecha de Nacimiento</label>
+            <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="fechaNacimiento" ngbDatepicker
+                    #d="ngbDatepicker" required=""/>
+
+
+                <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
+                    <mat-icon>calendar_month</mat-icon>
+
+                </button>
+            </div>
+
+            <label class="labeltxt">Dirección</label>
+            <input class="form-control" type="text" [(ngModel)]="cliente!.direccion" name="direccion">
+            <label class="labeltxt">Teléfono</label>
+            <input class="form-control" type="tel" [(ngModel)]="cliente!.telefono" name="tel">
+
+            <label class="labeltxt">Correo</label>
+            <input class="form-control" type="email" [(ngModel)]="cliente!.correo" name="correo">
+
+            <label class="labeltxt">Rol</label>
+            <div class="card card_cuentas">
+                <div class="form-check" *ngFor="let tipo of roles" >
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" [(ngModel)]="rol" [value]="tipo">
+                    <label class="form-check-label" for="flexRadioDefault1">
+                        {{tipo.nombre}}
+                    </label>
+                </div>
+               
+            </div>
+            <div class="d-flex">
+                <span class="spacer"></span>
+                <button class="confirmBtn" type="submit" mat-stroked-button>Crear</button>
+            
+            </div>
+        </form>
+    </div>
+</ng-container>
