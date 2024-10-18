@@ -17,40 +17,14 @@
         <div class="row">
             <h3 class="title">Nuevo Usuario</h3>
         </div>
-        <label class="labeltxt">CUI</label>
-        <form  #loginForm="ngForm" (ngSubmit)="searchCui()" >  
-            <div class="input-group mb-3">
-            <input type="text" class="form-control" [(ngModel)]="cui" name="cui" required>
-            <button class="btn btn-outline-secondary" type="submit">Buscar</button>
-        </div>
-        </form>
       
         <form  #cunetaForm="ngForm" (ngSubmit)="confirmAccount()">
             <label class="labeltxt">Nombres</label>
-            <input class="form-control" type="text"  [(ngModel)]="cliente!.nombre" name="nombres" required="">
+            <input class="form-control" type="text"  [(ngModel)]="nombres" name="nombres" required="">
             <label class="labeltxt">Apellido</label>
-            <input class="form-control" type="text" [(ngModel)]="cliente!.apellido" name="apellidos" required="">
+            <input class="form-control" type="text" [(ngModel)]="apellidos" name="apellidos" required="">
 
-            <label class="labeltxt">Fecha de Nacimiento</label>
-            <div class="input-group">
-                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="fechaNacimiento" ngbDatepicker
-                    #d="ngbDatepicker" required=""/>
-
-
-                <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
-                    <mat-icon>calendar_month</mat-icon>
-
-                </button>
-            </div>
-
-            <label class="labeltxt">Dirección</label>
-            <input class="form-control" type="text" [(ngModel)]="cliente!.direccion" name="direccion">
-            <label class="labeltxt">Teléfono</label>
-            <input class="form-control" type="tel" [(ngModel)]="cliente!.telefono" name="tel">
-
-            <label class="labeltxt">Correo</label>
-            <input class="form-control" type="email" [(ngModel)]="cliente!.correo" name="correo">
-
+            
             <label class="labeltxt">Rol</label>
             <div class="card card_cuentas">
                 <div class="form-check" *ngFor="let tipo of roles" >

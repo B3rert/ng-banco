@@ -2,10 +2,13 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { ClienteInterface } from 'src/app/interfaces/cliente.interface';
+import { NewUserInterface } from 'src/app/interfaces/new-user.interface';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { RolInterface } from 'src/app/interfaces/rol.interface';
+import { UserInterface as UsuarioInterface } from 'src/app/interfaces/user.interface';
 import { ApiService } from 'src/app/services/api.service';
 import { ClienteService } from 'src/app/services/cliente.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
 import { WidgetService } from 'src/app/services/widget.service';
 
 @Component({
@@ -14,29 +17,18 @@ import { WidgetService } from 'src/app/services/widget.service';
   styleUrls: ['./new-user.component.scss'],
   providers: [
     WidgetService,
-    ClienteService,
+    UsuarioService,
   ]
 })
 export class NewUserComponent implements OnInit{
 
   isLoading: boolean = false;
-  cui: string = "";
-  fechaNacimiento?: NgbDateStruct;
 
-
-  cliente: ClienteInterface = {
-    apellido: "",
-    direccion: "",
-    dpi: "",
-    fecha_nacimiento: new Date(),
-    nombre: "",
-    telefono: "",
-    usuario_id: 0,
-    correo: ""
-  };
-
+  nombres:string = "";
+  apellidos:string = "";
   roles:RolInterface[] = [];
   rol?:RolInterface;
+  user?:UsuarioInterface;
 
 
   /**
@@ -45,7 +37,7 @@ export class NewUserComponent implements OnInit{
   constructor(
     private _location:Location,
     private _widgetService: WidgetService,
-    private _clienteService: ClienteService,
+    private _userService:UsuarioService,
   ) {
     
   }
@@ -56,12 +48,42 @@ export class NewUserComponent implements OnInit{
     this._location.back();
   }
 
-  confirmAccount(){
+ async confirmAccount(){
+    if (
+      !this.nombres ||
+      !this.apellidos ||
+      !this.rol
+    ) {
+      this._widgetService.openSnackbar("Por favor, completa todos los campos");
+      return;
+    }
 
+    this.isLoading = true;
+
+    let resUser = await this.createUser();
+   
+    this.isLoading = false;
+
+
+    this._widgetService.openSnackbar("Cuenta creada exitosamente");
+    
+    //TODO:Generar informe
+
+
+    //Limpiar formulario
+    this.emptyForm();
   }
+
   
-  async loadClienteCui(): Promise<boolean> {
-    const api = () => this._clienteService.getTipoCuentaDpi(this.cui);
+  async createUser(): Promise<boolean> {
+
+    const user: NewUserInterface = {
+      apellido: this.nombres,
+      nombre: this.apellidos,
+      rol: this.rol!.id,  
+    }
+
+    const api = () => this._userService.postUser(user);
 
     const res: ResApiInterface = await ApiService.apiUse(api);
 
@@ -71,40 +93,19 @@ export class NewUserComponent implements OnInit{
       return false;
     }
 
-    if (res.data == "Cliente no encontrado.") {
-      this._widgetService.openSnackbar("Cliente no encontrado.");
-      return false;
-    }
-
-    this.cliente = res.data;
-
-
-    let date = new Date(this.cliente.fecha_nacimiento)
-
-    this.fechaNacimiento = {
-      year: date.getFullYear(),
-      day: date.getDate() + 1,
-      month: date.getMonth(),
-    }
+    this.user = res.data;
 
     return true;
   }
+  
 
-  async searchCui() {
-
-    if (!this.cui) {
-      this._widgetService.openSnackbar("Ingresa un CUI para buscar");
-
-      return;
-    }
-
-
-    this.isLoading = true;
-    let res = await this.loadClienteCui();
-    this.isLoading = false;
-
-
-
+  emptyForm() {
+    this.rol = undefined;
+    this.nombres = "";
+    this.apellidos = "";
+    this.user = undefined;
   }
+
+
 
 }
