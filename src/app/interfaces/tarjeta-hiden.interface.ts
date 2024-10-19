@@ -5,6 +5,7 @@ export interface TarjetaHidenInterface {
     numero_tarjeta: string;
     tipo_tarjeta: string;
     estado_tarjeta: string;
+    estado_id: number;
     saldo: number;
     nombre: string;
     apellido: string;

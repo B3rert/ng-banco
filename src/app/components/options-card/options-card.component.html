@@ -54,11 +54,15 @@
                 <input class="form-check-input" type="checkbox" role="switch" [(ngModel)]="show" (ngModelChange)="showCard()">
                 <label class="form-check-label">Ver Credenciales</label>
             </div>
-            <div class="form-check form-switch actionSwitch">
-                <input class="form-check-input" type="checkbox" role="switch">
-                <label class="form-check-label">Activa</label>
+            <div class="form-check form-switch actionSwitch" *ngIf="data.estado_id != 3" >
+                <input class="form-check-input" type="checkbox" role="switch" [(ngModel)]="active" (ngModelChange)="activeCard()">
+                <label class="form-check-label">{{data.estado_tarjeta}}</label>
             </div>
-            <button mat-button color="primary">Ver Historial</button>
+            <div class="form-check form-switch actionSwitch" *ngIf="data.estado_id  == 3">
+                <input class="form-check-input" type="checkbox" role="switch" checked disabled>
+                <label class="form-check-label">{{data.estado_tarjeta | titlecase}}</label>
+            </div>
+            <button mat-button color="primary" (click)="navigateHistory()">Ver Historial</button>
         </div>
     </div>
 </mat-dialog-content>
