@@ -36,11 +36,6 @@ export class LoginComponent implements OnInit {
 
   }
 
-
-  navRegister() {
-    this._router.navigate(['/register']);
-  }
-
   //Validar usuario y contraseña
   async login(): Promise<void> {
 
