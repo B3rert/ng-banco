@@ -6,6 +6,7 @@ import { NewAccountComponent } from "./components/new-account/new-account.compon
 import { NewUserComponent } from "./components/new-user/new-user.component";
 import { HistoryComponent } from "./components/history/history.component";
 import { CardComponent } from "./components/card/card.component";
+import { TransferComponent } from "./components/transfer/transfer.component";
 
 type PathMatch = "full" | "prefix" | undefined;
 
@@ -17,6 +18,7 @@ const appRoutes = [
   { path: 'new-user', component: NewUserComponent },
   { path: 'accounts', component: AccountsComponent },
   { path: 'cards', component: CardComponent },
+  { path: 'transfer', component: TransferComponent },
   { path: 'transactions/:idCuenta', component: HistoryComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' as PathMatch },
   { path: '**', redirectTo: '/login', pathMatch: 'full' as PathMatch }

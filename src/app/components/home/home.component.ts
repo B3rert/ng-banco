@@ -34,4 +34,9 @@ export class HomeComponent {
     this._router.navigate(['/cards']);
   }
 
+  navigateTransfer(){
+    this._router.navigate(['/transfer']);
+
+  }
+
 }
