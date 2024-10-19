@@ -6,6 +6,8 @@ import { WidgetService } from 'src/app/services/widget.service';
 import { Router } from '@angular/router';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { ApiService } from 'src/app/services/api.service';
+import { MatDialog } from '@angular/material/dialog';
+import { OptionsCardComponent } from '../options-card/options-card.component';
 
 @Component({
   selector: 'app-card',
@@ -29,6 +31,8 @@ export class CardComponent {
     private _tarjetaService: TarjetaService,
     private _widgetService: WidgetService,
     private _router:Router,
+    private _dialog: MatDialog
+
   ) {
 
   }
@@ -53,6 +57,17 @@ export class CardComponent {
   changeStatusCard(){
     console.log("Cambiar");
     
+  }
+
+  
+  opneCard(card:TarjetaHidenInterface) {
+
+
+    this._dialog.open(OptionsCardComponent, {
+      data: card,
+    });
+
+   
   }
 
   async getAccounts(): Promise<boolean> {

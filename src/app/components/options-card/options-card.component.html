@@ -1,0 +1,42 @@
+<!-- Titulo del dialogo -->
+ <mat-toolbar>
+    <span class="spacer"></span>
+    <button mat-icon-button matTooltip="Regresar" [mat-dialog-close]>
+        <mat-icon>close</mat-icon>
+    </button>
+ </mat-toolbar>
+<h2 mat-dialog-title>Cuenta {{data.numero_cuenta}}</h2>
+<!-- Descripcion del dialogo -->
+<mat-dialog-content class="mat-typography">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="card justify-content-center">
+                    <div class="d-flex">
+                        <span class="spacer"></span>
+                        <p>TARJETA DE {{data.tipo_tarjeta.toUpperCase()}}</p>
+
+                    </div>
+                    <p>{{data.numero_tarjeta}}</p>
+                    <p>**/**</p>
+                    <div class="d-flex">
+                        <p>{{data.nombre.toUpperCase()}} {{data.apellido.toUpperCase()}}</p>
+                        <span class="spacer"></span>
+                        <p>CVV ***</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-check form-switch actionSwitch">
+                <input class="form-check-input" type="checkbox" role="switch">
+                <label class="form-check-label">Ver Credenciales</label>
+            </div>
+            <div class="form-check form-switch actionSwitch">
+                <input class="form-check-input" type="checkbox" role="switch">
+                <label class="form-check-label">Activa</label>
+            </div>
+            <button mat-button color="primary">Ver Historial</button>
+        </div>
+    </div>
+</mat-dialog-content>

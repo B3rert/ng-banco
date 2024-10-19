@@ -30,6 +30,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatRadioModule} from '@angular/material/radio';
+import { OptionsCardComponent } from './components/options-card/options-card.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import {MatRadioModule} from '@angular/material/radio';
     ProgressComponent,
     NewAccountComponent,
     NewUserComponent,
-    MonthsFilterComponent
+    MonthsFilterComponent,
+    OptionsCardComponent
   ],
   imports: [
     routing,
