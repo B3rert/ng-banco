@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CardDataInterface } from 'src/app/interfaces/card-data.interface';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
@@ -7,12 +7,13 @@ import { TarjetaHidenInterface } from 'src/app/interfaces/tarjeta-hiden.interfac
 import { ApiService } from 'src/app/services/api.service';
 import { TarjetaService } from 'src/app/services/tarjeta.service';
 import { WidgetService } from 'src/app/services/widget.service';
+import { PasswordComponent } from '../password/password.component';
 
 @Component({
   selector: 'app-options-card',
   templateUrl: './options-card.component.html',
   styleUrls: ['./options-card.component.scss'],
-  providers:[
+  providers: [
     TarjetaService,
     WidgetService,
   ]
@@ -21,35 +22,42 @@ export class OptionsCardComponent {
 
 
   constructor(
-    private _widgetService:WidgetService,
-    private _tarjetaService:TarjetaService,
-    private _router:Router,
+    private _dialog: MatDialog,
+    private _widgetService: WidgetService,
+    private _tarjetaService: TarjetaService,
+    private _router: Router,
     public dialogRef: MatDialogRef<OptionsCardComponent>,
     @Inject(MAT_DIALOG_DATA) public data: TarjetaHidenInterface,
   ) {
 
   }
 
-  card?:CardDataInterface;
-  show:boolean = false;
-  active:boolean = false;
-  isLoading: boolean = true;
+  card?: CardDataInterface;
+  show: boolean = false;
+  active: boolean = false;
+  isLoading: boolean = false;
 
-  async showCard(){
-    if(this.show){
-      this.isLoading = true;
-      await this.getCard();
-      this.isLoading = false;
-    }else{
+  async showCard() {
+    if (this.show) {
+
+      const dialogRef = this._dialog.open(PasswordComponent);
+
+      dialogRef.afterClosed().subscribe(async result => {
+        this.isLoading = true;
+        await this.getCard();
+        this.isLoading = false;
+      });
+
+    } else {
       this.card = undefined;
     }
-    
+
   }
 
-  
-  activeCard(){
+
+  activeCard() {
     console.log(this.active);
-    
+
   }
 
 
@@ -58,7 +66,7 @@ export class OptionsCardComponent {
   }
 
 
-  
+
   async getCard(): Promise<boolean> {
 
     const user = sessionStorage.getItem("user");
