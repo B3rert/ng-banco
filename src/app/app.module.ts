@@ -31,6 +31,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatRadioModule} from '@angular/material/radio';
 import { OptionsCardComponent } from './components/options-card/options-card.component';
+import { PasswordComponent } from './components/password/password.component';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { OptionsCardComponent } from './components/options-card/options-card.com
     NewAccountComponent,
     NewUserComponent,
     MonthsFilterComponent,
-    OptionsCardComponent
+    OptionsCardComponent,
+    PasswordComponent
   ],
   imports: [
     routing,

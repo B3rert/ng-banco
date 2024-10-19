@@ -1,4 +1,8 @@
-<!-- Titulo del dialogo -->
+
+<img   *ngIf="isLoading" src="assets/load.gif" alt="load">
+
+<ng-container *ngIf="!isLoading">
+    <!-- Titulo del dialogo -->
  <mat-toolbar>
     <span class="spacer"></span>
     <button mat-icon-button matTooltip="Regresar" [mat-dialog-close]>
@@ -9,7 +13,7 @@
 <!-- Descripcion del dialogo -->
 <mat-dialog-content class="mat-typography">
     <div class="container">
-        <div class="row">
+        <div class="row" *ngIf="!card">
             <div class="col-sm-12 col-md-6 col-lg-4">
                 <div class="card justify-content-center">
                     <div class="d-flex">
@@ -27,9 +31,27 @@
                 </div>
             </div>
         </div>
+        <div class="row" *ngIf="card">
+            <div class="col-sm-12 col-md-6 col-lg-4">
+                <div class="card justify-content-center">
+                    <div class="d-flex">
+                        <span class="spacer"></span>
+                        <p>TARJETA DE {{data.tipo_tarjeta.toUpperCase()}}</p>
+
+                    </div>
+                    <p>{{card.numero_tarjeta}}</p>
+                    <p>{{card.fecha_vencimiento}}</p>
+                    <div class="d-flex">
+                        <p>{{data.nombre.toUpperCase()}} {{data.apellido.toUpperCase()}}</p>
+                        <span class="spacer"></span>
+                        <p>CVV {{card.cvv}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="form-check form-switch actionSwitch">
-                <input class="form-check-input" type="checkbox" role="switch">
+                <input class="form-check-input" type="checkbox" role="switch" [(ngModel)]="show" (ngModelChange)="showCard()">
                 <label class="form-check-label">Ver Credenciales</label>
             </div>
             <div class="form-check form-switch actionSwitch">
@@ -40,3 +62,5 @@
         </div>
     </div>
 </mat-dialog-content>
+
+</ng-container>

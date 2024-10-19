@@ -29,4 +29,8 @@ export class TarjetaService{
         return this._http.get(`${this._urlBase}Tarjeta/usuario/${user}`, { observe: 'response' });
     }
 
+    getTarjetaId(id:number) {
+        //consumo de api
+        return this._http.get(`${this._urlBase}Tarjeta/id/${id}`, { observe: 'response' });
+    }
 }

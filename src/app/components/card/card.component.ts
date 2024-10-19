@@ -46,13 +46,12 @@ export class CardComponent {
 
   async loadData() {
     this.isLoading = true;
+    //TODO:verificar contraseña
     await this.getAccounts();
     this.isLoading = false;
   }
 
-  navigateHistory(idCuenta:number) {
-    this._router.navigate(['/transactions', idCuenta]);
-  }
+
 
   changeStatusCard(){
     console.log("Cambiar");
