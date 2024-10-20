@@ -34,6 +34,7 @@ import { OptionsCardComponent } from './components/options-card/options-card.com
 import { PasswordComponent } from './components/password/password.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
