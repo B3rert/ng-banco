@@ -34,6 +34,7 @@ import { OptionsCardComponent } from './components/options-card/options-card.com
 import { PasswordComponent } from './components/password/password.component';
 import {MatSelectModule} from '@angular/material/select';
 import { InfoAccountComponent } from './components/info-account/info-account.component';
+import { SuccesTraComponent } from './components/succes-tra/succes-tra.component';
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { InfoAccountComponent } from './components/info-account/info-account.com
     MonthsFilterComponent,
     OptionsCardComponent,
     PasswordComponent,
-    InfoAccountComponent
+    InfoAccountComponent,
+    SuccesTraComponent
   ],
   imports: [
     routing,
