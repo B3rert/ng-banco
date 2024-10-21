@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dialog-actions',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./dialog-actions.component.scss']
 })
 export class DialogActionsComponent {
+  constructor(
+    public dialogRef: MatDialogRef<DialogActionsComponent>,
+  ) {
 
+  }
 }

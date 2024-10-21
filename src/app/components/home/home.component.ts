@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { DialogActionsComponent } from '../dialog-actions/dialog-actions.component';
 
 @Component({
   selector: 'app-home',
@@ -13,8 +15,27 @@ export class HomeComponent {
   /**
    *
    */
-  constructor(private _router: Router) {
+  constructor(
+    private _router: Router,
+    private _dialog: MatDialog
 
+  ) {
+
+  }
+
+  logout(){
+    const dialogRef = this._dialog.open(DialogActionsComponent, {
+      width: '500px',
+    });
+
+    dialogRef.afterClosed().subscribe( async result => {
+
+      if(result){
+        sessionStorage.clear();
+        localStorage.clear();
+        this._router.navigate(["/login"]);
+      }
+    });
   }
 
   navigateNewUser(){
