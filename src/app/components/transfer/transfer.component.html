@@ -39,7 +39,7 @@
                         <div class="row">
                             <label class="labeltxt">Cuenta a Debitar</label>
                             <mat-form-field appearance="fill">
-                                <mat-select>
+                                <mat-select [(ngModel)]="debit">
                                     <mat-option *ngFor="let cuenta of accounts" [value]="cuenta">
                                         {{cuenta.tipo_cuenta}} {{cuenta.numero_cuenta}}
                                     </mat-option>
@@ -58,7 +58,7 @@
                             </div>
                             </form>
                             <mat-form-field appearance="fill" *ngIf="typeTra.id == 1">
-                                <mat-select>
+                                <mat-select [(ngModel)]="credit">
                                     <mat-option *ngFor="let cuenta of accounts" [value]="cuenta">
                                         {{cuenta.tipo_cuenta}} {{cuenta.numero_cuenta}}
                                     </mat-option>

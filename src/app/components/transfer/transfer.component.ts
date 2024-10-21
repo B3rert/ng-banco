@@ -12,6 +12,8 @@ import { InfoAccountComponent } from '../info-account/info-account.component';
 import { TransaccionService } from 'src/app/services/transaccion.service';
 import { NewTraInterface } from 'src/app/interfaces/new-tra.interface';
 import { TransaccionInterface } from 'src/app/interfaces/transaccion.interface';
+import { SuccessTraInterface } from 'src/app/interfaces/success-tra.interface';
+import { SuccesTraComponent } from '../succes-tra/succes-tra.component';
 
 @Component({
   selector: 'app-transfer',
@@ -58,6 +60,7 @@ export class TransferComponent implements OnInit {
     private _widgetService: WidgetService,
     private _dialog: MatDialog,
     private _transaccionService: TransaccionService,
+
   ) {
   }
 
@@ -147,6 +150,7 @@ export class TransferComponent implements OnInit {
 
   async postTra(tra: NewTraInterface): Promise<boolean> {
 
+    
     const api = () => this._transaccionService.postTra(tra)
     const res: ResApiInterface = await ApiService.apiUse(api);
 
@@ -196,24 +200,44 @@ export class TransferComponent implements OnInit {
       return;
     }
 
+    if (
+      this.typeTra.id == 1
+    ) {
+      if (this.credit!.id == this.debit.id) {
+        this._widgetService.openSnackbar("La cuenta a debitar y la cuenta a acreditar deben ser distintas")
+        return;
+      }
+    }
+
+    
+    if (
+      this.typeTra.id == 2
+    ) {
+      if (this.cuentaNumero!.id == this.debit.id) {
+        this._widgetService.openSnackbar("La cuenta a debitar y la cuenta a acreditar deben ser distintas")
+        return;
+      }
+    }
+
+
     //TODO: Agregar dialogo de confirmacion
 
     let userId: number = Number(sessionStorage.getItem("id"));
 
     //realizar debito
     let debitTra: NewTraInterface = {
-      cuentaId:this.debit!.id,
-      desc:'Transferencia',
+      cuentaId: this.debit!.id,
+      desc: 'Transferencia',
       monto: Number(this.monto),
       tipoTra: 8, //transferencia
       userId: userId,
     }
 
-    let creditTra:NewTraInterface = {
+    let creditTra: NewTraInterface = {
       cuentaId: this.typeTra.id == 2 ? this.cuentaNumero!.id : this.credit!.id,
       desc: 'Transferencia',
       monto: Number(this.monto),
-      tipoTra: 1,
+      tipoTra: 6,
       userId: userId,
     }
 
@@ -223,24 +247,58 @@ export class TransferComponent implements OnInit {
     //TODO: unificar proceso en un solo proceimiento almaenado
     let redDebit: boolean = await this.postTra(debitTra);
 
-    if(!redDebit){
+    if (!redDebit) {
 
-      this.isLoading  = false;
+      this.isLoading = false;
       this._widgetService.openSnackbar("Error al realizar la transferencia");
       return;
     }
 
     let resCredit: boolean = await this.postTra(creditTra);
 
-    if(!resCredit){
-      this.isLoading  = false;
+    if (!resCredit) {
+      this.isLoading = false;
       this._widgetService.openSnackbar("Error al realizar la transferencia");
       return;
     }
 
+    await this.getAccounts();
+
     this.isLoading = false;
 
-    //TODO:Dialogo de transferencia exitosa 
+    let cuentaOrigen: CuentaNumeroInterface = {
+      id: 0,
+      nombre_completo: "", //TODO:Agregar nombre
+      numero_cuenta: this.debit!.numero_cuenta,
+      tipo_cuenta: this.debit!.tipo_cuenta,
+    }
+    let cuentaDestino: CuentaNumeroInterface = {
+      id: 0,
+      nombre_completo: this.typeTra.id == 1 ? "" : this.cuentaNumero!.nombre_completo,
+      numero_cuenta: this.typeTra.id == 1 ? this.credit!.numero_cuenta : this.cuentaNumero!.numero_cuenta,
+      tipo_cuenta: this.typeTra.id == 1 ? this.credit!.tipo_cuenta : this.cuentaNumero!.tipo_cuenta,
+    }
+    let transfer: SuccessTraInterface = {
+      comentario: this.comment,
+      cuentaDestino: cuentaDestino,
+      cuentaOrigen: cuentaOrigen,
+      fecha: this.traSuccess!.fecha,
+      id: this.traSuccess!.id,
+      monto: Number(this.monto),
+    }
+
+    this._dialog.open(SuccesTraComponent, {
+      width: '500px',
+      data: transfer,
+    });
+
+    //Empty Form
+    this.debit = undefined;
+    this.credit = undefined,
+      this.cuentaNumero = undefined,
+      this.numberAccount = "";
+    this.monto = "";
+    this.comment = "";
 
 
   }
