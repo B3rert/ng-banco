@@ -8,6 +8,8 @@ import { CuentaService } from 'src/app/services/cuenta.service';
 import { WidgetService } from 'src/app/services/widget.service';
 import { SelectAccountComponent } from '../select-account/select-account.component';
 import { FormControl, FormGroup } from '@angular/forms';
+import { TransaccionService } from 'src/app/services/transaccion.service';
+import { TransaccionMesInterface } from 'src/app/interfaces/transaccion-mes.interface';
 
 @Component({
   selector: 'app-status-account',
@@ -16,6 +18,7 @@ import { FormControl, FormGroup } from '@angular/forms';
   providers: [
     CuentaService,
     WidgetService,
+    TransaccionService,
   ]
 })
 export class StatusAccountComponent {
@@ -28,6 +31,8 @@ export class StatusAccountComponent {
   isLoading: boolean = false;
   cui: string = "";
   account?: CuentaNumeroInterface;
+  transactions: TransaccionMesInterface[] = [];
+
   /**
    *
    */
@@ -36,6 +41,8 @@ export class StatusAccountComponent {
     private _cuentaService: CuentaService,
     private _widgetService: WidgetService,
     private _dialog: MatDialog,
+    private _transaccionService: TransaccionService,
+
   ) {
 
   }
@@ -96,7 +103,54 @@ export class StatusAccountComponent {
     return true;
   }
 
-  ok(){
+  async ok() {
+
+    if (!this.account) {
+      this._widgetService.openSnackbar("Seleccione una cuenta");
+      return;
+    }
+
+    if (!this.range.value.start || this.range.value.end) {
+
+      this._widgetService.openSnackbar("Selecciona uun rango de fecha.")
+
+      return;
+    }
+
+    this.isLoading = true;
+    let res :boolean= await this.loadTransactions();
+    this.isLoading = false;
+
+    if(!res) return;
+
+
+    //generar informe
+  }
     
+  async loadTransactions(): Promise<boolean> {
+
+    this.transactions = [];
+    const api = () => this._transaccionService.getTransaccionRango(
+      this.account!.id,
+      this.range.value.start, 
+      this.range.value.end,
+    );
+
+    const res: ResApiInterface = await ApiService.apiUse(api);
+
+    if (!res.success) {
+      this._widgetService.openSnackbar("Algo salió mal, intentalo mas tarde.");
+      console.error(res);
+      return false;
+    }
+
+    this.transactions = res.data;
+
+    if(this.transactions.length == 0){
+      this._widgetService.openSnackbar("No hay transacciones para la fecha seleccionada.");
+      return false;
+    }
+
+    return true;
   }
 }

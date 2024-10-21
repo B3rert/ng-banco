@@ -35,6 +35,25 @@ export class TransaccionService {
     }
 
     //funcion que va a realizar consumo privado
+    getTransaccionRango(
+        idCuenta: number,
+        incio: Date,
+        fin: Date,
+    ) {
+
+        let headers = new HttpHeaders(
+            {
+                "idCuenta": idCuenta,
+                "inicio": incio.toISOString(),
+                "fin": fin.toISOString(),
+            }
+        );
+
+        //consumo de api
+        return this._http.get(`${this._urlBase}Transaccion/rango`, { headers: headers, observe: 'response' });
+    }
+
+    //funcion que va a realizar consumo privado
     postTra(tra: NewTraInterface) {
         //configurar headers
         let paramsStr = JSON.stringify(tra); //JSON to String
@@ -47,7 +66,7 @@ export class TransaccionService {
     getTipoTransaccion(
     ) {
         //consumo de api
-        return this._http.get(`${this._urlBase}Transaccion/Tipo`, {  observe: 'response' });
+        return this._http.get(`${this._urlBase}Transaccion/Tipo`, { observe: 'response' });
     }
 
 
