@@ -1,1 +1,30 @@
-<p>status-account works!</p>
+<app-progress *ngIf="isLoading"></app-progress>
+
+<ng-container *ngIf="!isLoading">
+
+    <mat-toolbar class="appBar">
+        <button mat-icon-button matTooltip="Regresar" (click)="backPage()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <img class="logo" src="assets/logo.png" alt="logo">
+        <span class="textLogo">Banco del Monte</span>
+
+        <span class="spacer"></span>
+
+    </mat-toolbar>
+
+    <div class="container main">
+        <div class="row">
+            <h3 class="title">Generar estado de cuenta</h3>
+        </div>
+        <div class="row">
+            <label class="labeltxt">CUI/Cliente</label>
+            <form #loginForm="ngForm" (ngSubmit)="searchAccountsCui()">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" [(ngModel)]="cui" name="cui" required>
+                    <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-container>

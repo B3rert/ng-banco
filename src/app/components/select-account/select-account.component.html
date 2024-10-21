@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Seleccionar</h2>
+
+
+<mat-dialog-content class="mat-typography" >
+    <ol class="list-group ">
+        <li class="list-group-item d-flex justify-content-between align-items-start list-group-item-action" *ngFor="let cuenta of data"  [mat-dialog-close]="cuenta">
+            <div class="ms-2 me-auto">
+                <div class="fw-bold">{{cuenta.numero_cuenta}}</div>
+                {{cuenta.nombre_completo}}
+            </div>
+            <span class="badge text-bg-success rounded-pill">{{cuenta.tipo_cuenta | currency:'GTQ ':'code'}}</span>
+        </li>
+        
+    </ol>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close >Cancelar</button>
+</mat-dialog-actions>
