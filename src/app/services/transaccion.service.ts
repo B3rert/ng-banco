@@ -44,4 +44,11 @@ export class TransaccionService {
     }
 
 
+    getTipoTransaccion(
+    ) {
+        //consumo de api
+        return this._http.get(`${this._urlBase}Transaccion/Tipo`, {  observe: 'response' });
+    }
+
+
 }

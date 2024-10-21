@@ -39,4 +39,7 @@ export class HomeComponent {
 
   }
 
+  navigateServices(){
+    this._router.navigate(['/services']);
+  }
 }

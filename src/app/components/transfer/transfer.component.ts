@@ -105,6 +105,15 @@ export class TransferComponent implements OnInit {
 
 
   async getAccountNumber(): Promise<boolean> {
+
+    
+    if(!this.numberAccount){
+
+      this._widgetService.openSnackbar("Ingresa una cuenta para buscar");
+
+      return false;
+    }
+
     this.isLoading = true;
 
     const api = () => this._cuentaService.getCuentaNumero(this.numberAccount);
