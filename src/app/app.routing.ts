@@ -9,22 +9,24 @@ import { CardComponent } from "./components/card/card.component";
 import { TransferComponent } from "./components/transfer/transfer.component";
 import { ServicesComponent } from "./components/services/services.component";
 import { StatusAccountComponent } from "./components/status-account/status-account.component";
+import { AuthGuard } from "./guards/auth/auth.guard";
+import { LoginGuard } from "./guards/login/login.guard";
 
 type PathMatch = "full" | "prefix" | undefined;
 
 const appRoutes = [
 
-  { path: 'login', component: LoginComponent },
-  { path: 'home', component: HomeComponent },
-  { path: 'new-account', component: NewAccountComponent },
-  { path: 'new-user', component: NewUserComponent },
-  { path: 'accounts', component: AccountsComponent },
-  { path: 'cards', component: CardComponent },
-  { path: 'transfer', component: TransferComponent },
-  { path: 'services', component: ServicesComponent },
-  { path: 'status', component: StatusAccountComponent },
-  { path: 'transactions/:idCuenta', component: HistoryComponent },
-  { path: '', redirectTo: '/login', pathMatch: 'full' as PathMatch },
-  { path: '**', redirectTo: '/login', pathMatch: 'full' as PathMatch }
+  { path: 'login', component: LoginComponent , canActivate: [LoginGuard] },
+  { path: 'home', component: HomeComponent , canActivate: [AuthGuard] },
+  { path: 'new-account', component: NewAccountComponent , canActivate: [AuthGuard] },
+  { path: 'new-user', component: NewUserComponent , canActivate: [AuthGuard] },
+  { path: 'accounts', component: AccountsComponent, canActivate: [AuthGuard]  },
+  { path: 'cards', component: CardComponent, canActivate: [AuthGuard]  },
+  { path: 'transfer', component: TransferComponent, canActivate: [AuthGuard]  },
+  { path: 'services', component: ServicesComponent, canActivate: [AuthGuard]  },
+  { path: 'status', component: StatusAccountComponent, canActivate: [AuthGuard]  },
+  { path: 'transactions/:idCuenta', component: HistoryComponent , canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/login', pathMatch: 'full' as PathMatch  },
+  { path: '**', redirectTo: '/login', pathMatch: 'full' as PathMatch  }
 ];
 export const routing = RouterModule.forRoot(appRoutes);
