@@ -43,6 +43,10 @@ body {
     font-weight: 500;
 }
 
+.p20{
+    padding: 20px;
+}
+
 .appBar{
     position: fixed;
     top: 0;
@@ -53,3 +57,9 @@ body {
     margin-top: 65px;
     padding-bottom: 20px;
 }
+
+.btnCons{
+    margin-top: 20px;
+    color:  #fff !important;
+    background-color: green !important;
+  }

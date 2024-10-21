@@ -32,7 +32,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatRadioModule} from '@angular/material/radio';
 import { OptionsCardComponent } from './components/options-card/options-card.component';
 import { PasswordComponent } from './components/password/password.component';
-
+import {MatSelectModule} from '@angular/material/select';
 
 
 @NgModule({
@@ -71,6 +71,7 @@ import { PasswordComponent } from './components/password/password.component';
     MatSnackBarModule,
     MatTooltipModule,
     MatRadioModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -22,13 +22,61 @@
             <label class="labeltxt">Tipo de Transferencia</label>
             <div class="card card_cuentas">
                 <div class="form-check" *ngFor="let tipo of typesTra">
-                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" [(ngModel)]="typeTra" [value]="tipo">
+                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"
+                        [(ngModel)]="typeTra" [value]="tipo" [disabled]="tipo.id == 3 ? true : false">
                     <label class="form-check-label" for="flexRadioDefault1">
                         {{tipo.name}}
                     </label>
                 </div>
-               
+
             </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="card p20">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <label class="labeltxt">Cuenta a Debitar</label>
+                            <mat-form-field appearance="fill">
+                                <mat-select>
+                                    <mat-option *ngFor="let cuenta of accounts" [value]="cuenta">
+                                        {{cuenta.tipo_cuenta}} {{cuenta.numero_cuenta}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <label class="labeltxt">Cuenta a Acreditar</label>
+                            
+                            <form  class="search" #loginForm="ngForm" (ngSubmit)="searchAccount()" *ngIf="typeTra.id == 2" >  
+                                <div class="input-group mb-3">
+                                <input type="text" class="form-control" [(ngModel)]="numberAccount" name="account" required placeholder="Buscar cuenta">
+                                <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+                            </div>
+                            </form>
+                            <mat-form-field appearance="fill" *ngIf="typeTra.id == 1">
+                                <mat-select>
+                                    <mat-option *ngFor="let cuenta of accounts" [value]="cuenta">
+                                        {{cuenta.tipo_cuenta}} {{cuenta.numero_cuenta}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <label class="labeltxt">Monto a debitar</label>
+                <input class="form-control" type="text" [(ngModel)]="monto" name="monto" required>
+                <label class="labeltxt">Comentario</label>
+                <input class="form-control" type="text" [(ngModel)]="comment" name="comentarui" required>
+
+
+            </div>
+            <button class="btnCons" mat-button>Transferir</button>
         </div>
     </div>
 </ng-container>
