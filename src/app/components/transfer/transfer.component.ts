@@ -138,4 +138,25 @@ export class TransferComponent implements OnInit {
 
     return true;
   }
+
+  async transfer(){
+    
+    //Validar campos
+
+    if(
+      !this.debit ||
+      !this.monto ||
+      !this.comment ||
+      (this.typeTra.id == 1 && !this.credit) ||
+      (this.typeTra.id == 2 && !this.cuentaNumero)
+    ){
+
+      this._widgetService.openSnackbar("Por favor, completa todos los campos.");
+      return;
+
+    }
+
+
+    //realizar transferencia
+  }
 }
