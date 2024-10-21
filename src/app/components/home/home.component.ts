@@ -42,4 +42,8 @@ export class HomeComponent {
   navigateServices(){
     this._router.navigate(['/services']);
   }
+
+  navigateStatus(){
+    this._router.navigate(['/status']);
+  }
 }

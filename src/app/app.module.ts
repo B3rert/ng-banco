@@ -32,6 +32,7 @@ import { PasswordComponent } from './components/password/password.component';
 import {MatSelectModule} from '@angular/material/select';
 import { InfoAccountComponent } from './components/info-account/info-account.component';
 import { SuccesTraComponent } from './components/succes-tra/succes-tra.component';
+import { StatusAccountComponent } from './components/status-account/status-account.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { SuccesTraComponent } from './components/succes-tra/succes-tra.component
     OptionsCardComponent,
     PasswordComponent,
     InfoAccountComponent,
-    SuccesTraComponent
+    SuccesTraComponent,
+    StatusAccountComponent
   ],
   imports: [
     routing,
