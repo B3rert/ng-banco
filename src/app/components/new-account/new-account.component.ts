@@ -65,16 +65,12 @@ export class NewAccountComponent implements OnInit {
     private _tarjetaService: TarjetaService,
     private _location: Location
   ) {
-
-
   }
 
   ngOnInit(): void {
 
     this.loadData();
   }
-
-
 
   async loadData() {
     this.isLoading = true;

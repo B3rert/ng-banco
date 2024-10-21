@@ -1,20 +1,36 @@
 <h2 mat-dialog-title>Trasnferencia Realizada con Exito</h2>
-<mat-dialog-content class="mat-typography">
-    <p>{{data.fecha| date:'dd/MM/yyyy hh:mm:ss' }}</p>
-    <label class="labeltxt">Autorizacion</label>
-    <p>{{data.id}}</p>
-    <label class="labeltxt">Cuenta origen</label>
-    <p>{{data.cuentaOrigen.nombre_completo}}</p>
-    <p>{{data.cuentaOrigen.tipo_cuenta}}</p>
-    <p>{{data.cuentaOrigen.numero_cuenta}}</p>
-    <label class="labeltxt">Cuenta Destino</label>
-    <p>{{data.cuentaDestino.nombre_completo}}</p>
-    <p>{{data.cuentaDestino.tipo_cuenta}}</p>
-    <p>{{data.cuentaDestino.numero_cuenta}}</p>
-    <label class="labeltxt">Monto</label>
-    <p>{{data.monto | currency:'GTQ ':'code'}}</p>
-    <label class="labeltxt">Comentario</label>
-    <p>{{data.comentario}}</p>
+<mat-dialog-content class="mat-typography" *ngIf="!data.cuenta">
+  <p>{{data.fecha| date:'dd/MM/yyyy hh:mm:ss' }}</p>
+  <label class="labeltxt">Autorizacion</label>
+  <p>{{data.id}}</p>
+  <label class="labeltxt">Cuenta origen</label>
+  <p>{{data.cuentaOrigen!.nombre_completo}}</p>
+  <p>{{data.cuentaOrigen!.tipo_cuenta}}</p>
+  <p>{{data.cuentaOrigen!.numero_cuenta}}</p>
+  <label class="labeltxt">Cuenta Destino</label>
+  <p>{{data.cuentaDestino!.nombre_completo}}</p>
+  <p>{{data.cuentaDestino!.tipo_cuenta}}</p>
+  <p>{{data.cuentaDestino!.numero_cuenta}}</p>
+  <label class="labeltxt">Monto</label>
+  <p>{{data.monto | currency:'GTQ ':'code'}}</p>
+  <label class="labeltxt">Comentario</label>
+  <p>{{data.comentario}}</p>
+</mat-dialog-content>
+
+<mat-dialog-content class="mat-typography" *ngIf="data.cuenta">
+  <p>{{data.fecha| date:'dd/MM/yyyy hh:mm:ss' }}</p>
+  <label class="labeltxt">Movimiento</label>
+  <p>{{data.tipoTra}}</p>
+  <label class="labeltxt">Autorizacion</label>
+  <p>{{data.id}}</p>
+  <label class="labeltxt">Cuenta</label>
+  <p>{{data.cuenta!.nombre_completo}}</p>
+  <p>{{data.cuenta!.tipo_cuenta}}</p>
+  <p>{{data.cuenta!.numero_cuenta}}</p>
+  <label class="labeltxt">Monto</label>
+  <p>{{data.monto | currency:'GTQ ':'code'}}</p>
+  <label class="labeltxt">Comentario</label>
+  <p>{{data.comentario}}</p>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close (click)="downloadSucces()">Guardar</button>

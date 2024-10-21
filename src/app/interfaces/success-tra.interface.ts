@@ -5,7 +5,9 @@ export interface SuccessTraInterface{
     monto:number,
     fecha:Date,
     id: number
-    cuentaOrigen: CuentaNumeroInterface,
-    cuentaDestino: CuentaNumeroInterface,
+    cuentaOrigen?: CuentaNumeroInterface,
+    cuentaDestino?: CuentaNumeroInterface,
+    cuenta?: CuentaNumeroInterface,
+    tipoTra?:string;
     comentario:string,
 }

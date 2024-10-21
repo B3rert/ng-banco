@@ -9,6 +9,11 @@ import { CuentaService } from 'src/app/services/cuenta.service';
 import { CuentaNumeroInterface } from 'src/app/interfaces/cuenta-numero.interface';
 import { InfoAccountComponent } from '../info-account/info-account.component';
 import { MatDialog } from '@angular/material/dialog';
+import { CuentaNumeroDpiInterface } from 'src/app/interfaces/cuenta-numero-dpi.interface';
+import { NewTraInterface } from 'src/app/interfaces/new-tra.interface';
+import { SuccessTraInterface } from 'src/app/interfaces/success-tra.interface';
+import { SuccesTraComponent } from '../succes-tra/succes-tra.component';
+import { TransaccionInterface } from 'src/app/interfaces/transaccion.interface';
 
 @Component({
   selector: 'app-services',
@@ -28,9 +33,11 @@ export class ServicesComponent implements OnInit {
   inputCuentaRetiro: string = "";
   inputDpi: string = "";
   cuentaDeposito?: CuentaNumeroInterface;
-  cuentaRetiro?: CuentaNumeroInterface;
+  cuentaRetiro?: CuentaNumeroDpiInterface;
   monto: string = "";
   comment: string = "";
+  traSuccess?: TransaccionInterface;
+
   /**
    *
    */
@@ -59,13 +66,133 @@ export class ServicesComponent implements OnInit {
     this._location.back();
   }
 
-  confirmTra() {
+  async confirmTra() {
+    //validar campos
+    if (this.tipoTransaccion.id == 6) { //6 deposito
+      if (
+        !this.cuentaDeposito ||
+        !this.monto ||
+        !this.comment
+      ) {
+        this._widgetService.openSnackbar("Por favor llena todos los campos.")
+        return;
+      }
+    }
 
+    if (this.tipoTransaccion.id == 7) { //7 retiro
+      if (
+        !this.cuentaRetiro ||
+        !this.monto ||
+        !this.comment
+      ) {
+        this._widgetService.openSnackbar("Por favor llena todos los campos.")
+        return;
+      }
+    }
+
+    if (!this.esNumerico(this.monto)) {
+      this._widgetService.openSnackbar("Monto invalido.")
+      return;
+    }
+
+    if (this.tipoTransaccion.id == 7) {
+      if (Number(this.monto) > this.cuentaRetiro!.saldo) {
+        this._widgetService.openSnackbar("Saldo en la cuenta insuficiente.");
+        return;
+      }
+    }
+
+
+    //realizar movimiento
+    //TODO: Agregar dialogo de confirmacion
+
+    let userId: number = Number(sessionStorage.getItem("id"));
+
+    let tra: NewTraInterface = {
+      cuentaId: this.tipoTransaccion.id == 6 ? this.cuentaDeposito!.id : this.cuentaRetiro!.id,
+      desc: this.tipoTransaccion.nombre,
+      monto: Number(this.monto),
+      tipoTra: this.tipoTransaccion.id,
+      userId: userId,
+    }
+
+    this.isLoading = true;
+
+
+    let resTra: boolean = await this.postTra(tra);
+
+    if (!resTra) {
+      this.isLoading = false;
+      this._widgetService.openSnackbar("Error al realizar la transferencia");
+      return;
+    }
+
+    this.isLoading = false;
+
+
+    let cuentaTra: CuentaNumeroInterface = {
+      id: 0,
+      nombre_completo: this.tipoTransaccion.id == 6 ? this.cuentaDeposito!.nombre_completo : this.cuentaRetiro!.nombre_completo,
+      numero_cuenta: this.tipoTransaccion.id == 6 ? this.cuentaDeposito!.numero_cuenta : this.cuentaRetiro!.numero_cuenta,
+      tipo_cuenta: this.tipoTransaccion.id == 6 ? this.cuentaDeposito!.tipo_cuenta : this.cuentaRetiro!.tipo_cuenta,
+    }
+
+    let transfer: SuccessTraInterface = {
+      cuenta: cuentaTra,
+      comentario: this.comment,
+      fecha: this.traSuccess!.fecha,
+      id: this.traSuccess!.id,
+      tipoTra:this.tipoTransaccion.nombre,
+      monto: Number(this.monto),
+    }
+
+    this._dialog.open(SuccesTraComponent, {
+      width: '500px',
+      data: transfer,
+    });
+
+    //Empty Form
+    this.cuentaDeposito = undefined;
+    this.cuentaRetiro = undefined;
+    this.inputCuentaDeposito = "";
+    this.inputCuentaRetiro = "";
+    this.inputDpi = "";
+    this.monto = "";
+    this.comment = "";
+
+  }
+
+
+  async postTra(tra: NewTraInterface): Promise<boolean> {
+
+
+    const api = () => this._transaccionService.postTra(tra)
+    const res: ResApiInterface = await ApiService.apiUse(api);
+
+    if (!res.success) {
+      this._widgetService.openSnackbar("Algo salió mal, intentalo mas tarde.");
+      console.error(res);
+      return false;
+    }
+
+    let trans: TransaccionInterface[] = res.data;
+
+    if (trans.length == 0) {
+      return false;
+    }
+
+    this.traSuccess = trans[0];
+
+    return true;
+  }
+
+  esNumerico(texto: string): boolean {
+    return !isNaN(Number(texto)) && texto.trim() !== '';
   }
 
   async searchAccountRet(): Promise<boolean> {
 
-    if (!this.inputCuentaRetiro) {
+    if (!this.inputCuentaRetiro || !this.inputDpi) {
 
       this._widgetService.openSnackbar("Ingresa una cuenta para buscar");
 
@@ -87,7 +214,7 @@ export class ServicesComponent implements OnInit {
       return false;
     }
 
-    let cunetasNumero: CuentaNumeroInterface[] = res.data;
+    let cunetasNumero: CuentaNumeroDpiInterface[] = res.data;
 
 
     if (cunetasNumero.length == 0) {
@@ -181,7 +308,7 @@ export class ServicesComponent implements OnInit {
 
     this.tiposTransaccion = res.data;
 
-    if(this.tiposTransaccion.length> 0){
+    if (this.tiposTransaccion.length > 0) {
       this.tipoTransaccion = this.tiposTransaccion[0];
     }
 
