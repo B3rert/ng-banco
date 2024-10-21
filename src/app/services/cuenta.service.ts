@@ -39,5 +39,9 @@ export class CuentaService {
         //consumo de api
         return this._http.get(`${this._urlBase}Cuenta/numero/${numeroCuenta}`, { observe: 'response' });
     }
+    getCuentaNumeroDpi(numeroCuenta:string, dpi:string) {
+        //consumo de api
+        return this._http.get(`${this._urlBase}Cuenta/dpi/${numeroCuenta}/${dpi}`, { observe: 'response' });
+    }
 
 }

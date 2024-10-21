@@ -23,7 +23,7 @@
             <div class="card card_cuentas">
                 <div class="form-check" *ngFor="let tipo of tiposTransaccion" [matTooltip]="tipo.descripcion">
                     <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"
-                        [(ngModel)]="tipoTransaccion" [value]="tipo">
+                        [(ngModel)]="tipoTransaccion" [value]="tipo" [disabled]="tipo.id == 8 ">
                     <label class="form-check-label" for="flexRadioDefault1">
                         {{tipo.nombre}}
                     </label>
@@ -32,15 +32,40 @@
             </div>
         </div>
         <br>
-        <div class="row">
-            <label class="labeltxt">CUI</label>
-            <form  #loginForm="ngForm" (ngSubmit)="searchAccountDep()" >  
+        <div class="row" *ngIf="tipoTransaccion.id == 6">
+            <label class="labeltxt">Depositiar a</label>
+            <form #loginForm="ngForm" (ngSubmit)="searchAccountDep()">
                 <div class="input-group mb-3">
-                <input type="text" class="form-control" [(ngModel)]="cuentaDeposito" name="srchCuentaDep" required>
-                <button class="btn btn-outline-secondary" type="submit">Buscar</button>
-            </div>
+                    <input type="text" class="form-control" [(ngModel)]="inputCuentaDeposito" name="srchCuentaDep"
+                        required placeholder="Buscar cuenta">
+                    <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+                </div>
             </form>
-          
+
+        </div>
+
+        <div class="row" *ngIf="tipoTransaccion.id == 7">
+            <form #loginForm="ngForm" (ngSubmit)="searchAccountRet()">
+                <label class="labeltxt">CUI</label>
+                <input class="form-control" type="text" [(ngModel)]="monto" name="monto" required>
+                <label class="labeltxt">Retirar de</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" [(ngModel)]="inputCuentaRetiro" name="srchCuentaRet"
+                        required placeholder="Buscar cuenta">
+                    <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+                </div>
+            </form>
+
+        </div>
+
+        <div class="row" *ngIf="tipoTransaccion">
+            <label class="labeltxt">Monto a debitar</label>
+            <input class="form-control" type="text" [(ngModel)]="monto" name="monto" required>
+            <label class="labeltxt">Comentario</label>
+            <input class="form-control" type="text" [(ngModel)]="comment" name="comentarui" required>
+
+
+            <button class="btnCons" mat-button (click)="confirmTra()">Confirmar</button>
         </div>
     </div>
 </ng-container>
