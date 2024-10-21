@@ -36,11 +36,11 @@ export class TarjetaService {
     }
 
     //funcion que va a realizar consumo privado
-    putEstadoTarjeta(tarjeta: StatusCardInterface) {
+    postEstadoTarjeta(tarjeta: StatusCardInterface) {
         //configurar headers
         let paramsStr = JSON.stringify(tarjeta); //JSON to String
         let headers = new HttpHeaders({ "Content-Type": "application/json" });
         //consumo de api
-        return this._http.put(`${this._urlBase}Tarjeta/estado`, paramsStr, { headers: headers, observe: 'response' });
+        return this._http.post(`${this._urlBase}Tarjeta/estado`, paramsStr, { headers: headers, observe: 'response' });
     }
 }

@@ -127,7 +127,7 @@ export class OptionsCardComponent implements OnInit {
       id: this.data.id,
     }
 
-    const api = () => this._tarjetaService.putEstadoTarjeta(newStatus);
+    const api = () => this._tarjetaService.postEstadoTarjeta(newStatus);
 
     const res: ResApiInterface = await ApiService.apiUse(api);
 

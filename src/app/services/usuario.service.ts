@@ -4,6 +4,7 @@ import { ApiProvider } from '../providers/api.provider';
 import { ResApiInterface } from '../interfaces/res-api.interface';
 import { CredencialInterface } from '../interfaces/credencial.interface';
 import { NewUserInterface } from '../interfaces/new-user.interface';
+import { PutPasswordInterface } from '../interfaces/put-password.interface';
 
 @Injectable()
 export class UsuarioService {
@@ -15,6 +16,14 @@ export class UsuarioService {
         this._urlBase = ApiProvider.baseUrl;
     }
 
+      //funcion que va a realizar consumo privado
+      postPassword(newPassword: PutPasswordInterface) {
+        //configurar headers
+        let paramsStr = JSON.stringify(newPassword); //JSON to String
+        let headers = new HttpHeaders({ "Content-Type": "application/json" });
+        //consumo de api
+        return this._http.post(`${this._urlBase}Usuario/pass`, paramsStr, { headers: headers, observe: 'response' });
+    }
 
     //funcion que va a realizar consumo privado
     postUser(user: NewUserInterface) {
