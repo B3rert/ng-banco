@@ -156,7 +156,11 @@ export class TransferComponent implements OnInit {
 
     }
 
+    //TODO: Agregar dialogo de confirmacion
 
     //realizar transferencia
+    
+
+
   }
 }
