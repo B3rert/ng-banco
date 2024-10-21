@@ -5,6 +5,7 @@ import { CuentaService } from 'src/app/services/cuenta.service';
 import { ResApiInterface } from 'src/app/interfaces/res-api.interface';
 import { ApiService } from 'src/app/services/api.service';
 import { WidgetService } from 'src/app/services/widget.service';
+import { CuentaNumeroInterface } from 'src/app/interfaces/cuenta-numero.interface';
 
 @Component({
   selector: 'app-transfer',
@@ -41,6 +42,7 @@ export class TransferComponent implements OnInit {
   monto = "";
   comment = "";
   numberAccount = "";
+  cuentaNumero?:CuentaNumeroInterface;
 
   constructor(
     private _location: Location,
@@ -84,8 +86,37 @@ export class TransferComponent implements OnInit {
 
     this.accounts = res.data;
 
-    console.log(user);
 
+
+    return true;
+  }
+
+
+  
+  async getAccountNumber(): Promise<boolean> {
+
+    const api = () => this._cuentaService.getCuentaNumero(this.numberAccount);
+
+    const res: ResApiInterface = await ApiService.apiUse(api);
+
+    if (!res.success) {
+      this._widgetService.openSnackbar("Algo salió mal, intentalo mas tarde.");
+      console.error(res);
+      return false;
+    }
+
+    let cunetasNumero:CuentaNumeroInterface[] = res.data;
+
+
+    if(cunetasNumero.length == 0){
+      this._widgetService.openSnackbar("No hay coincidencias");
+      return false;
+    }
+
+    //Abiri dialogo con informacion de la cuenta
+
+    // this.numberAccount = cunetasNumero[0].numero_cuenta;
+    // this.cuentaNumero = cunetasNumero[0];
 
     return true;
   }

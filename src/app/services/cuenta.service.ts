@@ -35,4 +35,9 @@ export class CuentaService {
         return this._http.get(`${this._urlBase}Cuenta/usuario/${user}`, { observe: 'response' });
     }
 
+    getCuentaNumero(numeroCuenta:string) {
+        //consumo de api
+        return this._http.get(`${this._urlBase}Cuenta/numero/${numeroCuenta}`, { observe: 'response' });
+    }
+
 }
