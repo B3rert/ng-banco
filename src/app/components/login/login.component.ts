@@ -74,6 +74,7 @@ export class LoginComponent implements OnInit {
     sessionStorage.setItem('user', resUser.usuario);
     sessionStorage.setItem('token', resUser.clave);
     sessionStorage.setItem('rol', resUser.rol_Id.toString());
+    sessionStorage.setItem('id', resUser.id.toString());
 
     //Si el usuario esta correcto
     this._router.navigate(['/home']);

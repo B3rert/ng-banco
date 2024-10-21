@@ -9,6 +9,9 @@ import { CuentaNumeroInterface } from 'src/app/interfaces/cuenta-numero.interfac
 import { MatDialog } from '@angular/material/dialog';
 import { MonthsFilterComponent } from '../months-filter/months-filter.component';
 import { InfoAccountComponent } from '../info-account/info-account.component';
+import { TransaccionService } from 'src/app/services/transaccion.service';
+import { NewTraInterface } from 'src/app/interfaces/new-tra.interface';
+import { TransaccionInterface } from 'src/app/interfaces/transaccion.interface';
 
 @Component({
   selector: 'app-transfer',
@@ -17,6 +20,7 @@ import { InfoAccountComponent } from '../info-account/info-account.component';
   providers: [
     CuentaService,
     WidgetService,
+    TransaccionService,
   ]
 })
 export class TransferComponent implements OnInit {
@@ -46,12 +50,14 @@ export class TransferComponent implements OnInit {
   comment = "";
   numberAccount = "";
   cuentaNumero?: CuentaNumeroInterface;
+  traSuccess?: TransaccionInterface;
 
   constructor(
     private _location: Location,
     private _cuentaService: CuentaService,
     private _widgetService: WidgetService,
     private _dialog: MatDialog,
+    private _transaccionService: TransaccionService,
   ) {
   }
 
@@ -130,7 +136,7 @@ export class TransferComponent implements OnInit {
       if (result) {
 
         this.numberAccount = `${cunetasNumero[0].numero_cuenta} ${cunetasNumero[0].nombre_completo}`;
-        this.cuentaNumero = cunetasNumero[0]  ;
+        this.cuentaNumero = cunetasNumero[0];
 
       }
     });
@@ -139,28 +145,108 @@ export class TransferComponent implements OnInit {
     return true;
   }
 
-  async transfer(){
-    
+  async postTra(tra: NewTraInterface): Promise<boolean> {
+
+    const api = () => this._transaccionService.postTra(tra)
+    const res: ResApiInterface = await ApiService.apiUse(api);
+
+    if (!res.success) {
+      this._widgetService.openSnackbar("Algo salió mal, intentalo mas tarde.");
+      console.error(res);
+      return false;
+    }
+
+    let trans: TransaccionInterface[] = res.data;
+
+    if (trans.length == 0) {
+      return false;
+    }
+
+    this.traSuccess = trans[0];
+
+    return true;
+  }
+
+  async transfer() {
+
     //Validar campos
 
-    if(
+    if (
       !this.debit ||
       !this.monto ||
       !this.comment ||
       (this.typeTra.id == 1 && !this.credit) ||
       (this.typeTra.id == 2 && !this.cuentaNumero)
-    ){
+    ) {
 
       this._widgetService.openSnackbar("Por favor, completa todos los campos.");
       return;
 
     }
 
+    //validar que le monto sea correcto
+    if (!this.esNumerico(this.monto)) {
+      this._widgetService.openSnackbar("EL monto no es valido");
+      return;
+    }
+
+    //validar que el monto  pueda debitarse
+    if (Number(this.monto) > this.debit!.saldo) {
+      this._widgetService.openSnackbar("Sin saldo suficiente en la cuenta a debitar.")
+      return;
+    }
+
     //TODO: Agregar dialogo de confirmacion
 
-    //realizar transferencia
-    
+    let userId: number = Number(sessionStorage.getItem("id"));
+
+    //realizar debito
+    let debitTra: NewTraInterface = {
+      cuentaId:this.debit!.id,
+      desc:'Transferencia',
+      monto: Number(this.monto),
+      tipoTra: 8, //transferencia
+      userId: userId,
+    }
+
+    let creditTra:NewTraInterface = {
+      cuentaId: this.typeTra.id == 2 ? this.cuentaNumero!.id : this.credit!.id,
+      desc: 'Transferencia',
+      monto: Number(this.monto),
+      tipoTra: 1,
+      userId: userId,
+    }
+
+    this.isLoading = true;
+
+
+    //TODO: unificar proceso en un solo proceimiento almaenado
+    let redDebit: boolean = await this.postTra(debitTra);
+
+    if(!redDebit){
+
+      this.isLoading  = false;
+      this._widgetService.openSnackbar("Error al realizar la transferencia");
+      return;
+    }
+
+    let resCredit: boolean = await this.postTra(creditTra);
+
+    if(!resCredit){
+      this.isLoading  = false;
+      this._widgetService.openSnackbar("Error al realizar la transferencia");
+      return;
+    }
+
+    this.isLoading = false;
+
+    //TODO:Dialogo de transferencia exitosa 
 
 
   }
+
+  esNumerico(texto: string): boolean {
+    return !isNaN(Number(texto)) && texto.trim() !== '';
+  }
+
 }
