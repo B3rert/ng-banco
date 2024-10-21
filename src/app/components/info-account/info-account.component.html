@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Acreditar a</h2>
+<mat-dialog-content class="mat-typography">
+    <label class="labeltxt">Nombre</label>
+    <p>{{data.nombre_completo}}</p>
+    <label class="labeltxt">No. Cuenta</label>
+    <p>{{data.numero_cuenta}}</p>
+    <label class="labeltxt">Tipo de Cuenta</label>
+    <p>{{data.tipo_cuenta}}</p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Aceptar</button>
+</mat-dialog-actions>

@@ -51,7 +51,7 @@
                         <div class="row">
                             <label class="labeltxt">Cuenta a Acreditar</label>
                             
-                            <form  class="search" #loginForm="ngForm" (ngSubmit)="searchAccount()" *ngIf="typeTra.id == 2" >  
+                            <form  class="search" #loginForm="ngForm" (ngSubmit)="getAccountNumber()" *ngIf="typeTra.id == 2" >  
                                 <div class="input-group mb-3">
                                 <input type="text" class="form-control" [(ngModel)]="numberAccount" name="account" required placeholder="Buscar cuenta">
                                 <button class="btn btn-outline-secondary" type="submit">Buscar</button>

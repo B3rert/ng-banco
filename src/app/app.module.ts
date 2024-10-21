@@ -33,6 +33,7 @@ import {MatRadioModule} from '@angular/material/radio';
 import { OptionsCardComponent } from './components/options-card/options-card.component';
 import { PasswordComponent } from './components/password/password.component';
 import {MatSelectModule} from '@angular/material/select';
+import { InfoAccountComponent } from './components/info-account/info-account.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import {MatSelectModule} from '@angular/material/select';
     NewUserComponent,
     MonthsFilterComponent,
     OptionsCardComponent,
-    PasswordComponent
+    PasswordComponent,
+    InfoAccountComponent
   ],
   imports: [
     routing,
