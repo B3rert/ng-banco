@@ -19,6 +19,12 @@ import { DialogActionsComponent } from './components/dialog-actions/dialog-actio
 import { NewAccountComponent } from './components/new-account/new-account.component';
 import { NewUserComponent } from './components/new-user/new-user.component';
 import { MonthsFilterComponent } from './components/months-filter/months-filter.component';
+import { OptionsCardComponent } from './components/options-card/options-card.component';
+import { PasswordComponent } from './components/password/password.component';
+import { InfoAccountComponent } from './components/info-account/info-account.component';
+import { SuccesTraComponent } from './components/succes-tra/succes-tra.component';
+import { StatusAccountComponent } from './components/status-account/status-account.component';
+import { SelectAccountComponent } from './components/select-account/select-account.component';
 
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -27,13 +33,10 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatRadioModule} from '@angular/material/radio';
-import { OptionsCardComponent } from './components/options-card/options-card.component';
-import { PasswordComponent } from './components/password/password.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSelectModule} from '@angular/material/select';
-import { InfoAccountComponent } from './components/info-account/info-account.component';
-import { SuccesTraComponent } from './components/succes-tra/succes-tra.component';
-import { StatusAccountComponent } from './components/status-account/status-account.component';
-import { SelectAccountComponent } from './components/select-account/select-account.component';
+import { MatNativeDateModule } from '@angular/material/core';  
+
 
 
 @NgModule({
@@ -74,6 +77,8 @@ import { SelectAccountComponent } from './components/select-account/select-accou
     MatTooltipModule,
     MatRadioModule,
     MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
