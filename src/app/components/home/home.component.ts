@@ -11,6 +11,7 @@ import { DialogActionsComponent } from '../dialog-actions/dialog-actions.compone
 export class HomeComponent {
 
   isLoading: boolean = false;
+  rol:number = 0;
 
   /**
    *
