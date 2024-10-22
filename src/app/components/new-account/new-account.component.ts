@@ -16,6 +16,12 @@ import { TarjetaService } from 'src/app/services/tarjeta.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { WidgetService } from 'src/app/services/widget.service';
 import { Location } from '@angular/common';
+import { AccountReportService } from 'src/app/reports/account.report';
+
+import { TDocumentDefinitions } from 'pdfmake/interfaces';
+import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfFonts from "pdfmake/build/vfs_fonts";
+import { AccountReportInterface } from 'src/app/interfaces/account-report.interface';
 
 
 @Component({
@@ -28,6 +34,7 @@ import { Location } from '@angular/common';
     ClienteService,
     UsuarioService,
     TarjetaService,
+    AccountReportService,
   ]
 })
 export class NewAccountComponent implements OnInit {
@@ -63,7 +70,8 @@ export class NewAccountComponent implements OnInit {
     private _clienteService: ClienteService,
     private _userService: UsuarioService,
     private _tarjetaService: TarjetaService,
-    private _location: Location
+    private _location: Location,
+    private _reportService:AccountReportService,
   ) {
   }
 
@@ -78,7 +86,7 @@ export class NewAccountComponent implements OnInit {
     this.isLoading = false;
   }
 
-  backPage(){
+  backPage() {
     this._location.back();
   }
 
@@ -333,8 +341,18 @@ export class NewAccountComponent implements OnInit {
 
 
     this._widgetService.openSnackbar("Cuenta creada exitosamente");
+
+
     
-    //TODO:Generar informe
+    let report:AccountReportInterface = {
+      cliente: this.cliente,
+      cuenta: this.cuenta,
+      tarjeta: this.tarjeta,
+      user: this.user,
+    }
+    
+    const docDefinition = await this._reportService.getReport(report);
+    pdfMake.createPdf(docDefinition, undefined, undefined, pdfFonts.pdfMake.vfs).open();
 
 
     //Limpiar formulario

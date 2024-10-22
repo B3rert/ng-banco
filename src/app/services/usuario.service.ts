@@ -23,7 +23,7 @@ export class UsuarioService {
         let paramsStr = JSON.stringify(user); //JSON to String
         let headers = new HttpHeaders({ "Content-Type": "application/json" });
         //consumo de api
-        return this._http.post(`${this._urlBase}Usuario/pass`, paramsStr, { headers: headers, observe: 'response' });
+        return this._http.post(`${this._urlBase}Usuario/crear`, paramsStr, { headers: headers, observe: 'response' });
     }
 
 
