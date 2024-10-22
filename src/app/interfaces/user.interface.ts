@@ -4,4 +4,5 @@ export interface UserInterface {
     clave:   string;
     correo:  string;
     rol_Id:  number;
+    estado:boolean;
 }

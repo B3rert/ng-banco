@@ -35,7 +35,8 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSelectModule} from '@angular/material/select';
-import { MatNativeDateModule } from '@angular/material/core';  
+import { MatNativeDateModule } from '@angular/material/core';
+import { ActivateUserComponent } from './components/activate-user/activate-user.component';  
 
 
 
@@ -59,7 +60,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     InfoAccountComponent,
     SuccesTraComponent,
     StatusAccountComponent,
-    SelectAccountComponent
+    SelectAccountComponent,
+    ActivateUserComponent
   ],
   imports: [
     routing,

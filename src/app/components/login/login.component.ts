@@ -5,6 +5,8 @@ import { CredencialInterface } from 'src/app/interfaces/credencial.interface';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { WidgetService } from 'src/app/services/widget.service';
 import { UserInterface } from 'src/app/interfaces/user.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivateUserComponent } from '../activate-user/activate-user.component';
 
 @Component({
   selector: 'app-login',
@@ -28,6 +30,7 @@ export class LoginComponent implements OnInit {
     private _loginService: UsuarioService,
     private _widgetService: WidgetService,
     private _router: Router,
+    private _dialog: MatDialog,
   ) {
   }
 
@@ -75,6 +78,24 @@ export class LoginComponent implements OnInit {
     sessionStorage.setItem('token', resUser.clave);
     sessionStorage.setItem('rol', resUser.rol_Id.toString());
     sessionStorage.setItem('id', resUser.id.toString());
+
+
+    //TODO:Verificar guards, ya que no valida el estado del usario para permitir el acceso, tambien se deben verificar roles
+    //Primer inicio o uno nuevo, si es primer inico olicitar cambio de contraseña
+    if (!resUser.estado) {
+
+      //Abrrir dialgo de activacion 
+      const dialogRef = this._dialog.open(ActivateUserComponent);
+
+      dialogRef.afterClosed().subscribe(async result => {
+        if (result) {
+          this._router.navigate(['/home']);
+        }
+      });
+
+
+      return;
+    }
 
     //Si el usuario esta correcto
     this._router.navigate(['/home']);

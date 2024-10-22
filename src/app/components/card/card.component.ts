@@ -53,10 +53,6 @@ export class CardComponent {
 
 
 
-  changeStatusCard(){
-    console.log("Cambiar");
-    
-  }
 
   
   opneCard(card:TarjetaHidenInterface) {

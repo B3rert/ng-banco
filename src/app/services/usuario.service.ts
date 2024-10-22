@@ -16,14 +16,6 @@ export class UsuarioService {
         this._urlBase = ApiProvider.baseUrl;
     }
 
-      //funcion que va a realizar consumo privado
-      postPassword(newPassword: PutPasswordInterface) {
-        //configurar headers
-        let paramsStr = JSON.stringify(newPassword); //JSON to String
-        let headers = new HttpHeaders({ "Content-Type": "application/json" });
-        //consumo de api
-        return this._http.post(`${this._urlBase}Usuario/pass`, paramsStr, { headers: headers, observe: 'response' });
-    }
 
     //funcion que va a realizar consumo privado
     postUser(user: NewUserInterface) {
@@ -31,7 +23,17 @@ export class UsuarioService {
         let paramsStr = JSON.stringify(user); //JSON to String
         let headers = new HttpHeaders({ "Content-Type": "application/json" });
         //consumo de api
-        return this._http.post(`${this._urlBase}Usuario/crear`, paramsStr, { headers: headers,  observe: 'response' });
+        return this._http.post(`${this._urlBase}Usuario/pass`, paramsStr, { headers: headers, observe: 'response' });
+    }
+
+
+    //funcion que va a realizar consumo privado
+    postNewPassword(newPass: PutPasswordInterface) {
+        //configurar headers
+        let paramsStr = JSON.stringify(newPass); //JSON to String
+        let headers = new HttpHeaders({ "Content-Type": "application/json" });
+        //consumo de api
+        return this._http.post(`${this._urlBase}Usuario/pass`, paramsStr, { headers: headers, observe: 'response' });
     }
 
 
