@@ -17,11 +17,10 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { WidgetService } from 'src/app/services/widget.service';
 import { Location } from '@angular/common';
 import { AccountReportService } from 'src/app/reports/account.report';
+import { AccountReportInterface } from 'src/app/interfaces/account-report.interface';
 
-import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
-import { AccountReportInterface } from 'src/app/interfaces/account-report.interface';
 
 
 @Component({
