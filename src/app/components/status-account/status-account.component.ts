@@ -10,6 +10,11 @@ import { SelectAccountComponent } from '../select-account/select-account.compone
 import { FormControl, FormGroup } from '@angular/forms';
 import { TransaccionService } from 'src/app/services/transaccion.service';
 import { TransaccionMesInterface } from 'src/app/interfaces/transaccion-mes.interface';
+import { StatusAccountReportService } from 'src/app/reports/status-account.report';
+
+import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfFonts from "pdfmake/build/vfs_fonts";
+
 
 @Component({
   selector: 'app-status-account',
@@ -19,6 +24,7 @@ import { TransaccionMesInterface } from 'src/app/interfaces/transaccion-mes.inte
     CuentaService,
     WidgetService,
     TransaccionService,
+    StatusAccountReportService,
   ]
 })
 export class StatusAccountComponent {
@@ -42,7 +48,7 @@ export class StatusAccountComponent {
     private _widgetService: WidgetService,
     private _dialog: MatDialog,
     private _transaccionService: TransaccionService,
-
+    private _reportService:StatusAccountReportService,
   ) {
 
   }
@@ -110,7 +116,7 @@ export class StatusAccountComponent {
       return;
     }
 
-    if (!this.range.value.start || this.range.value.end) {
+    if (!this.range.value.start || !this.range.value.end) {
 
       this._widgetService.openSnackbar("Selecciona uun rango de fecha.")
 
@@ -125,6 +131,10 @@ export class StatusAccountComponent {
 
 
     //generar informe
+
+    const docDefinition = await this._reportService.getReport(this.account, this.transactions);
+    pdfMake.createPdf(docDefinition, undefined, undefined, pdfFonts.pdfMake.vfs).open();
+
   }
     
   async loadTransactions(): Promise<boolean> {
