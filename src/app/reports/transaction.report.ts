@@ -23,7 +23,7 @@ export class TransactionReportService {
                 !data.cuenta ?
                     [
                         { text: 'Autorización', style: 'subheader' },
-                        { text: data.id },
+                        { text: data.autorizacion },
 
                         { text: 'Cuenta Origen', style: 'subheader' },
                         { text: data.cuentaOrigen!.nombre_completo },
@@ -46,7 +46,7 @@ export class TransactionReportService {
                         { text: data.tipoTra! },
 
                         { text: 'Autorización', style: 'subheader' },
-                        { text: data.id },
+                        { text: data.autorizacion },
 
                         { text: 'Cuenta', style: 'subheader' },
                         { text: data.cuenta!.nombre_completo },

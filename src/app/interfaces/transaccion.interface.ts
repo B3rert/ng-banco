@@ -5,5 +5,6 @@ export interface TransaccionInterface {
     monto:               number;
     fecha:               Date;
     descripcion:         string;
+    numero_autorizacion:         string;
     realizado_por:       number;
 }

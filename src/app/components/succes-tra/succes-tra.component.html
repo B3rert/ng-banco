@@ -2,7 +2,7 @@
 <mat-dialog-content class="mat-typography" *ngIf="!data.cuenta">
   <p>{{data.fecha| date:'dd/MM/yyyy hh:mm:ss' }}</p>
   <label class="labeltxt">Autorizacion</label>
-  <p>{{data.id}}</p>
+  <p>{{data.autorizacion}}</p>
   <label class="labeltxt">Cuenta origen</label>
   <p>{{data.cuentaOrigen!.nombre_completo}}</p>
   <p>{{data.cuentaOrigen!.tipo_cuenta}}</p>
@@ -22,7 +22,7 @@
   <label class="labeltxt">Movimiento</label>
   <p>{{data.tipoTra}}</p>
   <label class="labeltxt">Autorizacion</label>
-  <p>{{data.id}}</p>
+  <p>{{data.autorizacion}}</p>
   <label class="labeltxt">Cuenta</label>
   <p>{{data.cuenta!.nombre_completo}}</p>
   <p>{{data.cuenta!.tipo_cuenta}}</p>

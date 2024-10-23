@@ -292,7 +292,7 @@ export class TransferComponent implements OnInit {
       cuentaDestino: cuentaDestino,
       cuentaOrigen: cuentaOrigen,
       fecha: this.traSuccess!.fecha,
-      id: this.traSuccess!.id,
+      autorizacion: this.traSuccess!.numero_autorizacion,
       monto: Number(this.monto),
     }
 

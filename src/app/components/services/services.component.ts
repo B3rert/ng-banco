@@ -141,7 +141,7 @@ export class ServicesComponent implements OnInit {
       cuenta: cuentaTra,
       comentario: this.comment,
       fecha: this.traSuccess!.fecha,
-      id: this.traSuccess!.id,
+      autorizacion: this.traSuccess!.numero_autorizacion,
       tipoTra:this.tipoTransaccion.nombre,
       monto: Number(this.monto),
     }

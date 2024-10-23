@@ -4,7 +4,7 @@ import { CuentaUserInterface } from "./cuenta-user.interface"
 export interface SuccessTraInterface{
     monto:number,
     fecha:Date,
-    id: number
+    autorizacion: string
     cuentaOrigen?: CuentaNumeroInterface,
     cuentaDestino?: CuentaNumeroInterface,
     cuenta?: CuentaNumeroInterface,
