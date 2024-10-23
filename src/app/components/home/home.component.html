@@ -17,7 +17,7 @@
             <h3 class="title">Operaciones</h3>
         </div>
         <div class="row">
-            <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="col-sm-12 col-md-6 col-lg-4" *ngIf="rol == 3">
                 <div class="card justify-content-center" (click)="navigateNewAccount()">
                    <span class="d-flex"> 
                     <mat-icon>person_add</mat-icon>
@@ -27,7 +27,7 @@
                     <p> Crea cuentas bancarias (personal, de ahorro o empresarial) e ingresa los documentos requeridos.</p>
                 </div>
             </div>
-            <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="col-sm-12 col-md-6 col-lg-4" *ngIf="rol == 1">
                 <div class="card justify-content-center" (click)="navigateNewUser()">
                    <span class="d-flex"> 
                     <mat-icon>person_add</mat-icon>
@@ -37,7 +37,7 @@
                     <p> Crea nuevos usuarios (soprte, cajero, admin o usuarios) e ingresa los documentos requeridos.</p>
                 </div>
             </div>
-            <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="col-sm-12 col-md-6 col-lg-4" *ngIf="rol == 4">
                 <div class="card justify-content-center" (click)="navigateAccounts()">
                     <span class="d-flex"> 
                      <mat-icon>account_balance_wallet</mat-icon>
@@ -49,7 +49,7 @@
             </div>
             
 
-            <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="col-sm-12 col-md-6 col-lg-4" *ngIf="rol == 4">
                 <div class="card justify-content-center" (click)="navigateCards()">
                     <span class="d-flex"> 
                      <mat-icon>credit_card</mat-icon>
@@ -60,7 +60,7 @@
                  </div>
             </div>
             
-            <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="col-sm-12 col-md-6 col-lg-4" *ngIf="rol == 4">
                 <div class="card justify-content-center" (click)="navigateTransfer()">
                     <span class="d-flex"> 
                      <mat-icon>send_money</mat-icon>
@@ -70,7 +70,7 @@
                  </div>
             </div>
            
-            <div class="col-sm-12 col-md-6 col-lg-4" (click)="navigateServices()">
+            <div class="col-sm-12 col-md-6 col-lg-4" (click)="navigateServices()" *ngIf="rol == 2">
                 <div class="card justify-content-center">
                     <span class="d-flex"> 
                      <mat-icon>dynamic_feed</mat-icon>
@@ -79,7 +79,7 @@
                  <p>Selecciona el tipo de transacción (retiro, depósito o transferencia) para visualizar o realizar operaciones.</p>
                  </div>
             </div>
-            <div class="col-sm-12 col-md-6 col-lg-4">
+            <div class="col-sm-12 col-md-6 col-lg-4" *ngIf="rol == 3">
                 <div class="card justify-content-center" (click)="navigateStatus()">
                     <span class="d-flex"> 
                      <mat-icon>assured_workload</mat-icon>
