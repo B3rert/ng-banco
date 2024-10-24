@@ -23,7 +23,7 @@
             <div class="card card_cuentas">
                 <div class="form-check" *ngFor="let tipo of tiposTransaccion" [matTooltip]="tipo.descripcion">
                     <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"
-                        [(ngModel)]="tipoTransaccion" [value]="tipo" [disabled]="tipo.id == 8 ">
+                        [(ngModel)]="tipoTransaccion" [value]="tipo" [disabled]="tipo.id == 8 || tipo.id == 11 || tipo.id == 12">
                     <label class="form-check-label" for="flexRadioDefault1">
                         {{tipo.nombre}}
                     </label>
