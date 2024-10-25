@@ -67,8 +67,8 @@ export class CardComponent {
 
   async getAccounts(): Promise<boolean> {
 
-    const user = sessionStorage.getItem("user");
-    const api = () => this._tarjetaService.getTarjetaUser(user!);
+    const userId:number = Number(sessionStorage.getItem("id"));
+    const api = () => this._tarjetaService.getTarjetaUser(userId!);
 
     const res: ResApiInterface = await ApiService.apiUse(api);
 
@@ -80,7 +80,7 @@ export class CardComponent {
 
     this.cards = res.data;
 
-    console.log(user);
+    console.log(userId);
 
 
     return true;
