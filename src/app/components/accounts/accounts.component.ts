@@ -51,8 +51,8 @@ export class AccountsComponent implements OnInit {
 
   async getAccounts(): Promise<boolean> {
 
-    const user = sessionStorage.getItem("user");
-    const api = () => this._cuentaService.getCuentaUser(user!);
+    const userId:number = Number(sessionStorage.getItem("id"));
+    const api = () => this._cuentaService.getCuentaUser(userId!);
 
     const res: ResApiInterface = await ApiService.apiUse(api);
 
@@ -64,7 +64,7 @@ export class AccountsComponent implements OnInit {
 
     this.accounts = res.data;
 
-    console.log(user);
+    console.log(userId);
 
 
     return true;

@@ -84,8 +84,8 @@ export class TransferComponent implements OnInit {
 
   async getAccounts(): Promise<boolean> {
 
-    const user = sessionStorage.getItem("user");
-    const api = () => this._cuentaService.getCuentaUser(user!);
+    const userId:number = Number(sessionStorage.getItem("id"));
+    const api = () => this._cuentaService.getCuentaUser(userId!);
 
     const res: ResApiInterface = await ApiService.apiUse(api);
 
