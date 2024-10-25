@@ -10,6 +10,7 @@ import { DialogActionsComponent } from '../dialog-actions/dialog-actions.compone
 })
 export class HomeComponent {
 
+  user = sessionStorage.getItem("user")
   isLoading: boolean = false;
   rol:number = Number(sessionStorage.getItem("rol"));
 
